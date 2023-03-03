@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:doctor_hunt/domain/usecase/login_usecase.dart';
 import 'package:doctor_hunt/presentation/base/base_view_model.dart';
 import 'package:doctor_hunt/presentation/common/freezed/freezed.dart';
+import 'package:doctor_hunt/presentation/common/state_render/state_render.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_renderer_imp.dart';
 
 class LoginViewModel extends BaseViewModel
@@ -17,7 +18,7 @@ class LoginViewModel extends BaseViewModel
       StreamController<void>.broadcast();
 
   LoginObject _loginObject = LoginObject('', '');
-  LoginUseCase _loginUseCase;
+  final LoginUseCase _loginUseCase;
 
   LoginViewModel(this._loginUseCase);
 
@@ -40,8 +41,12 @@ class LoginViewModel extends BaseViewModel
 
   @override
   login() {
-    _loginUseCase
-        .execute(LoginUseCaseInput(_loginObject.email, _loginObject.password));
+    inputState.add(LoadingState(stateRenderType: StateRenderType.popupLoadingState,),);
+
+    _loginUseCase.execute(LoginUseCaseInput(
+      _loginObject.email,
+      _loginObject.password,
+    ));
   }
 
   @override

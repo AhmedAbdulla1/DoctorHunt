@@ -12,6 +12,7 @@ class RegisterRequest {
   final String name;
   final String email;
   final String password;
+  final String location='';
 
   RegisterRequest({
     required this.name,
@@ -19,3 +20,4 @@ class RegisterRequest {
     required this.password,
   });
 }
+

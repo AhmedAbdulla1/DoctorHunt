@@ -4,6 +4,7 @@ import 'package:doctor_hunt/presentation/common/reusable/custom_button.dart';
 import 'package:doctor_hunt/presentation/common/reusable/custom_scaffold.dart';
 import 'package:doctor_hunt/presentation/common/reusable/custom_text_form_field.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_renderer_imp.dart';
+import 'package:doctor_hunt/presentation/forgot_password/forgot_password_view.dart';
 import 'package:doctor_hunt/presentation/login_screen/view_model/login_view_model.dart';
 import 'package:doctor_hunt/presentation/resources/assets_manager.dart';
 import 'package:doctor_hunt/presentation/resources/color_manager.dart';
@@ -11,6 +12,7 @@ import 'package:doctor_hunt/presentation/resources/routes_manager.dart';
 import 'package:doctor_hunt/presentation/resources/string_manager.dart';
 import 'package:doctor_hunt/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginView extends StatefulWidget {
@@ -75,6 +77,9 @@ class _LoginViewState extends State<LoginView> {
               key: _globalKey,
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: AppSize.s100,
+                  ),
                   Text(
                     AppStrings.loginTitle,
                     style: Theme.of(context).textTheme.headlineLarge,
@@ -102,7 +107,7 @@ class _LoginViewState extends State<LoginView> {
                             color: ColorManager.white,
                             boxShadow: [
                               BoxShadow(
-                                color: ColorManager.grey,
+                                color: ColorManager.lightGrey,
                                 blurRadius: 5,
                               ),
                             ],
@@ -137,7 +142,7 @@ class _LoginViewState extends State<LoginView> {
                             color: ColorManager.white,
                             boxShadow: [
                               BoxShadow(
-                                color: ColorManager.grey1,
+                                color: ColorManager.lightGrey,
                                 blurRadius: 5,
                               ),
                             ],
@@ -187,19 +192,24 @@ class _LoginViewState extends State<LoginView> {
                   customElevatedButton(
                     stream: _loginViewModel.outAreAllInputValid,
                     onPressed: () {
-                      // _LoginViewModel.signup();
+                      _loginViewModel.login();
                       Navigator.pushNamed(context, Routes.mainScreen);
                     },
                     text: AppStrings.login,
                   ),
+                  //forgot password
                   textButton(
                     context: context,
                     onPressed: () {
-                      Navigator.pushNamed(context, Routes.forgotPasswordScreen);
+                      ForgotPasswordView().showEmailBottomSheet(context);
+                      // Navigator.pushNamed(context, Routes.forgotPasswordScreen);
                     },
-                    text: AppStrings.forgetPassword,
+                    text: AppStrings.forgotPassword,
                   ),
-                  const SizedBox(height: AppSize.s100,),
+
+                  const SizedBox(
+                    height: AppSize.s100,
+                  ),
                   textButton(
                     context: context,
                     onPressed: () {
@@ -207,7 +217,6 @@ class _LoginViewState extends State<LoginView> {
                     },
                     text: AppStrings.dontHaveAnAccount,
                   ),
-
                 ],
               ),
             ),
@@ -216,4 +225,6 @@ class _LoginViewState extends State<LoginView> {
       ),
     );
   }
+
+
 }

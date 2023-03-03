@@ -48,6 +48,8 @@ dependencies:
   lottie: ^2.2.0
   multiple_stream_builder: ^3.0.2
   flutter_svg: ^2.0.2
+  image_picker: ^0.8.6+3
+  flutter_otp_text_field: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -79,8 +81,11 @@ flutter:
     - assets/images/onBoarding1.png
     - assets/images/onBoarding2.png
     - assets/images/onBoarding3.png
+    - assets/images/grad.png
+    - assets/images/person.jpg
     - assets/images/facebook.svg
     - assets/images/google.svg
+
     - assets/json/empty.json
     - assets/json/error.json
     - assets/json/loading.json

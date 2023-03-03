@@ -13,7 +13,7 @@ class _AppServicesClient implements AppServicesClient {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://ahmedabduall.mocklab.io/';
+    baseUrl ??= 'https://doctorhunt.pythonanywhere.com/';
   }
 
   final Dio _dio;
@@ -40,12 +40,35 @@ class _AppServicesClient implements AppServicesClient {
     )
             .compose(
               _dio.options,
-              '/customers/login',
+              '/users/login/',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = AuthenticationResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ForgotPasswordResponse> forgotPassword(email) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'email': email};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ForgotPasswordResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/users/sendemail/',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ForgotPasswordResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -59,7 +82,7 @@ class _AppServicesClient implements AppServicesClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = {
-      'userName': userName,
+      'username': userName,
       'email': email,
       'password': password,
     };
@@ -71,7 +94,7 @@ class _AppServicesClient implements AppServicesClient {
     )
             .compose(
               _dio.options,
-              '/customers/register',
+              '/users/register/',
               queryParameters: queryParameters,
               data: _data,
             )

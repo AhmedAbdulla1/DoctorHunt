@@ -5,6 +5,7 @@ Widget customScaffold({
   required Widget body,
 }) {
   return Scaffold(
+    resizeToAvoidBottomInset:false,
     body: Container(
       height: double.infinity,
       decoration: const BoxDecoration(

@@ -6,17 +6,21 @@ import 'package:doctor_hunt/data/network/dio_factory.dart';
 import 'package:doctor_hunt/data/network/network_info.dart';
 import 'package:doctor_hunt/data/repository/repository_impl.dart';
 import 'package:doctor_hunt/domain/repository/repository.dart';
+import 'package:doctor_hunt/domain/usecase/forgot_password_usecase.dart';
 import 'package:doctor_hunt/domain/usecase/login_usecase.dart';
 import 'package:doctor_hunt/domain/usecase/register_usecase.dart';
+import 'package:doctor_hunt/domain/usecase/sign_as_adoctor_usecase.dart';
+import 'package:doctor_hunt/presentation/forgot_password/forgot_password_view_mode.dart';
 import 'package:doctor_hunt/presentation/login_screen/view_model/login_view_model.dart';
 import 'package:doctor_hunt/presentation/on_boarding_screen/view_model/on_boarding_view_model.dart';
-import 'package:doctor_hunt/presentation/signup_screen/view_model/signup_view_model.dart';
+import 'package:doctor_hunt/presentation/signup_screen/doctor/view_model/signup_view_model.dart';
+import 'package:doctor_hunt/presentation/signup_screen/patient/view_model/signup_view_model.dart';
 import 'package:get_it/get_it.dart';
 // import 'package:image_picker/image_picker.dart';
 
-
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 final instance = GetIt.instance;
 
 Future<void> initAppModule() async {
@@ -99,14 +103,23 @@ initRegisterModule() {
     // }
   }
 }
-// initForgotPasswordModule() {
-//   if (!GetIt.I.isRegistered<ForgotPasswordUseCase>()) {
-//     instance.registerFactory<ForgotPasswordUseCase>(
-//         () => ForgotPasswordUseCase(instance<Repository>()));
-//     instance.registerFactory<ForgotPasswordViewModel>(
-//         () => ForgotPasswordViewModel(instance<ForgotPasswordUseCase>()));
-//   }
-// }
+
+initRegisterAsDoctorNodule() {
+  if (!GetIt.I.isRegistered<SignAsDoctorUseCase>()) {
+    instance.registerFactory<SignAsDoctorUseCase>(
+        () => SignAsDoctorUseCase(instance<Repository>()));
+    instance.registerFactory<RegisterAsDoctorViewModel>(
+        () => RegisterAsDoctorViewModel(instance<SignAsDoctorUseCase>()));
+  }
+}
+initForgotPasswordModule() {
+  if (!GetIt.I.isRegistered<ForgotPasswordUseCase>()) {
+    instance.registerFactory<ForgotPasswordUseCase>(
+        () => ForgotPasswordUseCase(instance<Repository>()));
+    instance.registerFactory<ForgotPasswordViewModel>(
+        () => ForgotPasswordViewModel(instance<ForgotPasswordUseCase>()));
+  }
+}
 //
 // initHomeModule() {
 //   if (!GetIt.I.isRegistered<HomeUseCase>()) {
@@ -123,4 +136,3 @@ initRegisterModule() {
 // //     instance.registerFactory<StoreViewModel>(
 // //             () => StoreViewModel(instance<StoreDetailsUseCase>()));
 // //   }
-

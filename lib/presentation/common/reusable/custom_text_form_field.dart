@@ -1,5 +1,7 @@
 // import 'package:easy_localization/easy_localization.dart';
+import 'package:doctor_hunt/presentation/resources/color_manager.dart';
 import 'package:doctor_hunt/presentation/resources/string_manager.dart';
+import 'package:doctor_hunt/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
@@ -36,6 +38,14 @@ Widget customPasswordFormField({
       keyboardType: TextInputType.visiblePassword,
       controller: textEditingController,
       decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderRadius:BorderRadius.circular(20),
+            borderSide: BorderSide(
+              color: ColorManager.grey,
+              style: BorderStyle.solid,
+              width: AppSize.s1_5,
+            )
+        ),
         suffixIcon: IconButton(
           onPressed: onPressed,
           icon: Icon(

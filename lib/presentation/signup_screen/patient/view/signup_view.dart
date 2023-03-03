@@ -9,7 +9,7 @@ import 'package:doctor_hunt/presentation/resources/color_manager.dart';
 import 'package:doctor_hunt/presentation/resources/routes_manager.dart';
 import 'package:doctor_hunt/presentation/resources/string_manager.dart';
 import 'package:doctor_hunt/presentation/resources/values_manager.dart';
-import 'package:doctor_hunt/presentation/signup_screen/view_model/signup_view_model.dart';
+import 'package:doctor_hunt/presentation/signup_screen/patient/view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -108,7 +108,7 @@ class _SignupViewState extends State<SignupView> {
                             color: ColorManager.white,
                             boxShadow: [
                               BoxShadow(
-                                color: ColorManager.grey,
+                                color: ColorManager.lightGrey,
                                 blurRadius: 5,
                               ),
                             ],
@@ -122,7 +122,9 @@ class _SignupViewState extends State<SignupView> {
                               SvgPicture.asset(
                                 ImageAssets.google,
                               ),
-                              const SizedBox(width: AppSize.s10,),
+                              const SizedBox(
+                                width: AppSize.s10,
+                              ),
                               Text(
                                 AppStrings.google,
                                 style: Theme.of(context).textTheme.bodySmall,
@@ -141,7 +143,7 @@ class _SignupViewState extends State<SignupView> {
                             color: ColorManager.white,
                             boxShadow: [
                               BoxShadow(
-                                color: ColorManager.grey1,
+                                color: ColorManager.lightGrey,
                                 blurRadius: 5,
                               ),
                             ],
@@ -155,7 +157,9 @@ class _SignupViewState extends State<SignupView> {
                               SvgPicture.asset(
                                 ImageAssets.facebook,
                               ),
-                              const SizedBox(width: AppSize.s10,),
+                              const SizedBox(
+                                width: AppSize.s10,
+                              ),
                               Text(
                                 AppStrings.facebook,
                                 style: Theme.of(context).textTheme.bodySmall,
@@ -200,27 +204,39 @@ class _SignupViewState extends State<SignupView> {
                           value: false,
                           groupValue: false,
                           onChanged: (value) {}),
-                      Text(
-                        AppStrings.privacy,
-                        style: Theme.of(context).textTheme.labelSmall
-                      )
+                      Text(AppStrings.privacy,
+                          style: Theme.of(context).textTheme.labelSmall)
                     ],
                   ),
                   const SizedBox(height: AppSize.s50),
                   customElevatedButton(
                     stream: _signUpViewModel.outAreInputValid,
                     onPressed: () {
-                      // _signUpViewModel.signup();
-                      Navigator.pushNamed(context, Routes.mainScreen);
+                      _signUpViewModel.signup();
+                      Navigator.pushReplacementNamed(
+                          context, Routes.mainScreen);
                     },
                     text: AppStrings.signup,
                   ),
                   textButton(
                     context: context,
                     onPressed: () {
-                      Navigator.pushNamed(context, Routes.loginScreen);
+                      Navigator.pushReplacementNamed(
+                          context, Routes.loginScreen,);
                     },
                     text: AppStrings.haveAccount,
+                  ),
+                  Text(
+                    AppStrings.doctor,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  textButton(
+                    context: context,
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(
+                          context, Routes.registerAsDoctorScreen,);
+                    },
+                    text: AppStrings.registerAsADoctor,
                   )
                 ],
               ),

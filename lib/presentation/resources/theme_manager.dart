@@ -8,7 +8,7 @@ import 'values_manager.dart';
 ThemeData getApplicationTheme() {
   return ThemeData(
     //main color
-    scaffoldBackgroundColor: Color(0x000EBE7F),
+    scaffoldBackgroundColor: const Color(0x000EBE7F),
     primaryColor: ColorManager.primary,
     primaryColorLight: ColorManager.lightPrimary,
     primaryColorDark: ColorManager.darkPrimary,
@@ -111,14 +111,13 @@ ThemeData getApplicationTheme() {
         color: ColorManager.primary,
         fontSize: FontSize.s14,
       ),
-
-      //enable border style
+      //enable border st4yle
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(
           AppSize.s10,
         ),
         borderSide: BorderSide(
-          color: ColorManager.grey1,
+          color: ColorManager.lightGrey,
           width: AppSize.s1_5,
         ),
       ),

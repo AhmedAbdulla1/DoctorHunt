@@ -11,10 +11,12 @@ class ImageAssets{
   static const  String onBoardingLogo3 ="$imagePath/onBoarding3.png";
   static const  String facebook ='$imagePath/facebook.svg';
   static const  String google= '$imagePath/google.svg';
+  static const  String personal= '$imagePath/person.jpg';
+  static const  String grad= '$imagePath/grad.png';
 
 
 
-  // static const String hollowCircleIc = "$imagePath/hollow_circle_ic.svg";
+// static const String hollowCircleIc = "$imagePath/hollow_circle_ic.svg";
   // static const String solidCircleIc = "$imagePath/solid_circle_ic.svg";
   // static const String leftArrowIc = "$imagePath/left_arrow_ic.svg";
   // static const String rightArrowIc = "$imagePath/right_arrow_ic.svg";

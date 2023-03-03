@@ -34,7 +34,6 @@ class SignUpViewModel extends BaseViewModel
         stateRenderType: StateRenderType.popupLoadingState,
       ),
     );
-    return;
     _registerUseCase.execute(RegisterUseCaseInput(
       name: _signupObject.name,
       email: _signupObject.email,
