@@ -16,43 +16,35 @@ Map<String, dynamic> _$BaseResponseToJson(BaseResponse instance) =>
       'message': instance.message,
     };
 
-CustomerResponse _$CustomerResponseFromJson(Map<String, dynamic> json) =>
-    CustomerResponse(
-      json['id'] as String?,
-      json['name'] as String?,
-      json['numOfNotifications'] as int?,
+UserDataResponse _$UserDataResponseFromJson(Map<String, dynamic> json) =>
+    UserDataResponse(
+      json['id'] as int?,
+      json['email'] as String?,
+      json['username'] as String?,
+      json['phone_number'] as String?,
+      json['image'] as String?,
+      json['location'] as String?,
+      json['date_birth'] as String?,
     );
 
-Map<String, dynamic> _$CustomerResponseToJson(CustomerResponse instance) =>
+Map<String, dynamic> _$UserDataResponseToJson(UserDataResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'name': instance.name,
-      'numOfNotifications': instance.numOfNotifications,
-    };
-
-ContactsResponse _$ContactsResponseFromJson(Map<String, dynamic> json) =>
-    ContactsResponse(
-      json['phone'] as String?,
-      json['email'] as String?,
-      json['link'] as String?,
-    );
-
-Map<String, dynamic> _$ContactsResponseToJson(ContactsResponse instance) =>
-    <String, dynamic>{
-      'phone': instance.phone,
       'email': instance.email,
-      'link': instance.link,
+      'username': instance.username,
+      'phone_number': instance.phoneNumber,
+      'image': instance.image,
+      'location': instance.location,
+      'date_birth': instance.dateBirth,
     };
 
 AuthenticationResponse _$AuthenticationResponseFromJson(
         Map<String, dynamic> json) =>
     AuthenticationResponse(
-      json['customer'] == null
+      json['data'] == null
           ? null
-          : CustomerResponse.fromJson(json['customer'] as Map<String, dynamic>),
-      json['contacts'] == null
-          ? null
-          : ContactsResponse.fromJson(json['contacts'] as Map<String, dynamic>),
+          : UserDataResponse.fromJson(json['data'] as Map<String, dynamic>),
+      json['token'] as String?,
     )
       ..status = json['status'] as int?
       ..message = json['message'] as String?;
@@ -62,22 +54,34 @@ Map<String, dynamic> _$AuthenticationResponseToJson(
     <String, dynamic>{
       'status': instance.status,
       'message': instance.message,
-      'customer': instance.customer,
-      'contacts': instance.contacts,
+      'data': instance.userData,
+      'token': instance.token,
     };
 
-ForgotPasswordResponse _$ForgotPasswordResponseFromJson(
+LoginAuthenticationResponse _$LoginAuthenticationResponseFromJson(
         Map<String, dynamic> json) =>
-    ForgotPasswordResponse(
-      json['otp'] as String?,
+    LoginAuthenticationResponse(
+      json['id'] as int?,
+      json['token'] as String?,
     )
       ..status = json['status'] as int?
       ..message = json['message'] as String?;
 
-Map<String, dynamic> _$ForgotPasswordResponseToJson(
-        ForgotPasswordResponse instance) =>
+Map<String, dynamic> _$LoginAuthenticationResponseToJson(
+        LoginAuthenticationResponse instance) =>
     <String, dynamic>{
       'status': instance.status,
       'message': instance.message,
-      'otp': instance.otp,
+      'id': instance.id,
+      'token': instance.token,
+    };
+
+SendEmailResponse _$SendEmailResponseFromJson(Map<String, dynamic> json) =>
+    SendEmailResponse(
+      json['detail'] as String?,
+    );
+
+Map<String, dynamic> _$SendEmailResponseToJson(SendEmailResponse instance) =>
+    <String, dynamic>{
+      'detail': instance.detail,
     };

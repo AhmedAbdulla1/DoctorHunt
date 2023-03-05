@@ -4,6 +4,7 @@ import 'font_manager.dart';
 
 TextStyle _getTextStyle(double fontSize, FontWeight fontWeight, Color color) {
   return TextStyle(
+    fontFamily: FontConstants.fontFamily,
     color: color,
     fontSize: fontSize,
     fontWeight: fontWeight,

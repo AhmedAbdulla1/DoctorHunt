@@ -21,7 +21,7 @@ class _AppServicesClient implements AppServicesClient {
   String? baseUrl;
 
   @override
-  Future<AuthenticationResponse> login(
+  Future<LoginAuthenticationResponse> login(
     email,
     password,
   ) async {
@@ -33,7 +33,7 @@ class _AppServicesClient implements AppServicesClient {
       'password': password,
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<AuthenticationResponse>(Options(
+        _setStreamType<LoginAuthenticationResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -45,18 +45,18 @@ class _AppServicesClient implements AppServicesClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = AuthenticationResponse.fromJson(_result.data!);
+    final value = LoginAuthenticationResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<ForgotPasswordResponse> forgotPassword(email) async {
+  Future<SendEmailResponse> forgotPassword(email) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = {'email': email};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ForgotPasswordResponse>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<SendEmailResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -68,7 +68,7 @@ class _AppServicesClient implements AppServicesClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ForgotPasswordResponse.fromJson(_result.data!);
+    final value = SendEmailResponse.fromJson(_result.data!);
     return value;
   }
 

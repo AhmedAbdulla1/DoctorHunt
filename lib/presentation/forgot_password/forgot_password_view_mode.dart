@@ -5,6 +5,7 @@ import 'package:doctor_hunt/presentation/base/base_view_model.dart';
 import 'package:doctor_hunt/presentation/common/freezed/freezed.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_render.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_renderer_imp.dart';
+import 'package:doctor_hunt/presentation/resources/string_manager.dart';
 
 class ForgotPasswordViewModel extends BaseViewModel
     with ForgotPasswordViewModelInput, ForgotPasswordViewModelOutput {
@@ -17,7 +18,13 @@ class ForgotPasswordViewModel extends BaseViewModel
       StreamController.broadcast();
   final StreamController<String> _otpCodeIsValidController =
       StreamController.broadcast();
-  ForgotPasswordObject _forgotPasswordObject = ForgotPasswordObject('');
+  final StreamController<bool> _visibilityController =
+      StreamController.broadcast();
+  final StreamController<bool> isUserSendEmailSuccessfullyStreamController =
+      StreamController.broadcast();
+
+  final StreamController<void> _allInputsValid = StreamController.broadcast();
+  ForgotPasswordObject _forgotPasswordObject = ForgotPasswordObject('', '', '');
 
   final ForgotPasswordUseCase _forgotPasswordUseCase;
 
@@ -26,6 +33,17 @@ class ForgotPasswordViewModel extends BaseViewModel
   @override
   void start() {
     inputState.add(ContentState());
+  }
+
+  @override
+  void dispose() {
+    _emailController.close();
+    _otpController.close();
+    _newPasswordController.close();
+    _confirmPasswordController.close();
+    _otpCodeIsValidController.close();
+    _visibilityController.close();
+    super.dispose();
   }
 
   @override
@@ -38,28 +56,29 @@ class ForgotPasswordViewModel extends BaseViewModel
   sendEmail() async {
     inputState.add(
       LoadingState(
-        stateRenderType: StateRenderType.fullScreenLoadingState,
+        stateRenderType: StateRenderType.popupLoadingState,
       ),
     );
     (await _forgotPasswordUseCase.execute(
       _forgotPasswordObject.email,
     ))
         .fold((failure) {
+          print(failure.message);
       inputState.add(ErrorState(
-        stateRenderType: StateRenderType.fullScreenErrorState,
+        stateRenderType: StateRenderType.popupErrorState,
         message: failure.message,
       ));
     }, (data) {
-      // print(data);
+          print(data);
       inputState.add(
-        SuccessState(data),
+        SuccessState(data.detail),
       );
-      // isUserForgotPasswordSuccessfullyStreamController.add(true);
+      isUserSendEmailSuccessfullyStreamController.add(true);
     });
   }
 
   @override
-  getOtp() async {
+  resetPassword() async {
     inputState.add(
       LoadingState(
         stateRenderType: StateRenderType.fullScreenLoadingState,
@@ -76,7 +95,7 @@ class ForgotPasswordViewModel extends BaseViewModel
     }, (data) {
       // print(data);
       inputState.add(
-        SuccessState(data),
+        SuccessState(data.detail),
       );
       // isUserForgotPasswordSuccessfullyStreamController.add(true);
     });
@@ -85,11 +104,15 @@ class ForgotPasswordViewModel extends BaseViewModel
   @override
   setOtp(String otp) {
     inputOtp.add(otp);
+    _forgotPasswordObject = _forgotPasswordObject.copyWith(otp: otp);
   }
 
   @override
   setNewPassword(String password) {
     inputNewPassword.add(password);
+    _forgotPasswordObject = _forgotPasswordObject.copyWith(
+      password: password,
+    );
   }
 
   @override
@@ -110,8 +133,8 @@ class ForgotPasswordViewModel extends BaseViewModel
   Sink get inputNewPassword => _newPasswordController.sink;
 
   @override
-  Stream<bool> get outEmail =>
-      _emailController.stream.map((email) => _emailIsValid(email));
+  Stream<String?> get outEmail =>
+      _emailController.stream.map((email) => _emailOutError(email));
 
   @override
   Stream<bool> get outOtp =>
@@ -122,42 +145,77 @@ class ForgotPasswordViewModel extends BaseViewModel
       _otpCodeIsValidController.stream.map((otp) => _otpIsConfirm(otp));
 
   @override
-  Stream<bool> get outNewPassword => _newPasswordController.stream
-      .map((password) => _newPasswordIsValid(password));
+  Stream<String?> get outNewPassword => _newPasswordController.stream
+      .map((password) => _passwordOutError(password));
 
   @override
   Stream<bool> get outConfirmPassword => _confirmPasswordController.stream
       .map((confirm) => _confirmPasswordIsValid(confirm));
 
-  _emailIsValid(String email) {
+  String? _emailOutError(String email) {
+    if (email.isEmpty) {
+      return AppStrings.emailError;
+    }
+    if (!RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email)) {
+      return AppStrings.emailError2;
+    }
+    return null;
+  }
+
+  bool _emailIsValid(String email) {
     return RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(email);
   }
 
   _otpIsValid(String otp) {
-    return otp.isNotEmpty;
+    //todo
   }
 
   _otpIsConfirm(String otp) {
-    // todo confirm otp
-    return otp.isNotEmpty;
+    return otp.length == 4;
   }
 
   _newPasswordIsValid(String password) {
     return password.length >= 6;
   }
 
-  _confirmPasswordIsValid(String confirm) {
-    // TODO: implement outConfirmPassword
-    return confirm.length >= 6;
+  String? _passwordOutError(String password) {
+    if (password.isEmpty) {
+      return AppStrings.passwordError;
+    } else if (password.length < 6) {
+      return AppStrings.nameError2;
+    }
+    return null;
   }
+
+  _confirmPasswordIsValid(String confirm) {
+    return confirm.length >= 6 && confirm == _forgotPasswordObject.password;
+  }
+
+  @override
+  Sink get inputVisibility => _visibilityController.sink;
+
+  @override
+  Stream<bool> get outVisibility =>
+      _visibilityController.stream.map((visible) => visible);
+
+  @override
+  setVisibility(bool visible) {
+    inputVisibility.add(visible);
+  }
+
+  @override
+  Stream<bool> get outEmailIsValid =>
+      _emailController.stream.map((email) => _emailIsValid(email));
 }
 
 abstract class ForgotPasswordViewModelInput {
   setEmail(String email);
 
-  getOtp();
+  resetPassword();
 
   setOtp(String otp);
 
@@ -167,6 +225,8 @@ abstract class ForgotPasswordViewModelInput {
 
   setConfirmPassword(String confirm);
 
+  setVisibility(bool visible);
+
   Sink get inputEmail;
 
   Sink get inputOtp;
@@ -174,16 +234,22 @@ abstract class ForgotPasswordViewModelInput {
   Sink get inputNewPassword;
 
   Sink get inputConfirmPassword;
+
+  Sink get inputVisibility;
 }
 
 abstract class ForgotPasswordViewModelOutput {
-  Stream<bool> get outEmail;
+  Stream<String?> get outEmail;
+
+  Stream<bool> get outEmailIsValid;
 
   Stream<bool> get outOtp;
 
-  Stream<bool> get outNewPassword;
+  Stream<String?> get outNewPassword;
 
   Stream<bool> get outConfirmPassword;
 
   Stream<bool> get outOtpCodeIsValid;
+
+  Stream<bool> get outVisibility;
 }

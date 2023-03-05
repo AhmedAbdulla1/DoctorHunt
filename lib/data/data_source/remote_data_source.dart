@@ -7,10 +7,10 @@ import 'package:doctor_hunt/data/network/requests.dart';
 import 'package:doctor_hunt/data/response/responses.dart';
 
 abstract class RemoteDataSource {
-  Future<AuthenticationResponse> loginResponse(
+  Future<LoginAuthenticationResponse> loginResponse(
     LoginRequest loginRequest,
   );
-  Future<ForgotPasswordResponse> forgotPasswordResponse(String email);
+  Future<SendEmailResponse> sendEmailResponse(String email);
   Future<AuthenticationResponse> registerResponse(
       RegisterRequest registerRequest,
       );
@@ -27,7 +27,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   );
 
   @override
-  Future<AuthenticationResponse> loginResponse(
+  Future<LoginAuthenticationResponse> loginResponse(
       LoginRequest loginRequest) async {
     return await _appServicesClient.login(
       loginRequest.email,
@@ -44,7 +44,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
-  Future<ForgotPasswordResponse> forgotPasswordResponse(String email) async{
+  Future<SendEmailResponse> sendEmailResponse(String email) async{
     return await _appServicesClient.forgotPassword(
       email
     );

@@ -6,6 +6,7 @@ import 'package:doctor_hunt/presentation/base/base_view_model.dart';
 import 'package:doctor_hunt/presentation/common/freezed/freezed.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_render.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_renderer_imp.dart';
+import 'package:doctor_hunt/presentation/resources/string_manager.dart';
 
 class RegisterAsDoctorViewModel extends BaseViewModel
     with RegisterAsDoctorViewModelInput, RegisterAsDoctorViewModelOutput {
@@ -179,35 +180,37 @@ class RegisterAsDoctorViewModel extends BaseViewModel
   @override
   Sink get inputAreInputsValid => _allInputsValid.sink;
 
-  @override
-  Stream<File> get outGraduationCertificate =>
-      _graduationCertificateController.stream.map((file) => file);
+
+  // outputs
 
   @override
-  Stream<bool> get outPhone =>
-      _phoneController.stream.map((phone) => _phoneIsValid(phone));
+  Stream<String?> get outNameIsValid => _nameController.stream.map(
+        (name) => _nameOutError(name),
+      );
+  @override
+  Stream<String?> get outEmailIsValid => _emailController.stream.map(
+        (email) => _emailOutError(email),
+      );
+
+  @override
+  Stream<String?> get outPhone =>
+      _phoneController.stream.map((phone) => _phoneOutError(phone));
 
   @override
   Stream<bool> get outPosition =>
       _positionController.stream.map((position) => _positionIsValid(position));
 
   @override
+  Stream<File> get outGraduationCertificate =>
+      _graduationCertificateController.stream.map((file) => file);
+
+  @override
   Stream<File> get outProfilePicture =>
       _profilePictureController.stream.map((file) => file);
 
   @override
-  Stream<bool> get outNameIsValid => _nameController.stream.map(
-        (name) => _nameIsValid(name),
-      );
-
-  @override
-  Stream<bool> get outEmailIsValid => _emailController.stream.map(
-        (email) => _emailIsValid(email),
-      );
-
-  @override
-  Stream<bool> get outPasswordIsValid => _passwordController.stream.map(
-        (password) => _passwordIsValid(password),
+  Stream<String?> get outPasswordIsValid => _passwordController.stream.map(
+        (password) => _passwordOutError(password),
       );
   @override
   Stream<bool> get outPasswordIsVisible =>
@@ -219,30 +222,69 @@ class RegisterAsDoctorViewModel extends BaseViewModel
   Stream<bool> get outAreInputValid =>
       _allInputsValid.stream.map((_) => _areInputsValid());
 
+
+  String? _nameOutError(String name) {
+    if(name.isEmpty){
+      return AppStrings.nameError1;
+    }
+    else if(name.length<=6){
+      return AppStrings.nameError2;
+    }
+    else{
+      return null;
+    }
+  }
   _nameIsValid(String name) {
-    return name.isNotEmpty;
+    return name.length>=6;
+  }
+  String? _emailOutError(String email){
+    if (email.isEmpty) {
+      return AppStrings.emailError;
+    } else
+    if( !RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email)){
+      return AppStrings.emailError2;
+    }
+    return null;
+
+
+  }
+  _emailIsValid(String email) {
+    return RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email);
   }
 
-  _emailIsValid(String email) {
-    return email.isNotEmpty;
-  }
 
   _passwordIsValid(String password) {
-    return password.isNotEmpty;
+    return password.length>=6;
   }
-
+  String? _passwordOutError(String password) {
+    if(password.isEmpty){
+      return AppStrings.passwordError;
+    }else if(password.length<6){
+      return AppStrings.nameError2;
+    }
+    return null;
+  }
 
   bool _areInputsValid() {
     return _nameIsValid(_registerAsADoctorObject.name) &&
         _emailIsValid(_registerAsADoctorObject.email) &&
         _passwordIsValid(_registerAsADoctorObject.password);
   }
-
-  bool _phoneIsValid(String phone) {
+  String? _phoneOutError(String phone){
+    if(phone.isEmpty&&phone.length<10){
+      return AppStrings.phoneError;
+    }
+    return null;
+  }
+  _phoneIsValid(String phone) {
     return phone.isNotEmpty;
   }
 
-  bool _positionIsValid(String position) {
+   _positionIsValid(String position) {
     return position.isNotEmpty;
   }
 }
@@ -286,15 +328,15 @@ abstract class RegisterAsDoctorViewModelInput {
 }
 
 abstract class RegisterAsDoctorViewModelOutput {
-  Stream<bool> get outNameIsValid;
+  Stream<String?> get outNameIsValid;
 
-  Stream<bool> get outEmailIsValid;
+  Stream<String?> get outEmailIsValid;
 
-  Stream<bool> get outPasswordIsValid;
+  Stream<String?> get outPasswordIsValid;
 
   Stream<bool> get outPasswordIsVisible;
 
-  Stream<bool> get outPhone;
+  Stream<String?> get outPhone;
 
   Stream<bool> get outPosition;
 

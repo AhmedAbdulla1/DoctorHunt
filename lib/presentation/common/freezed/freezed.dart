@@ -37,5 +37,7 @@ class LoginObject with _$LoginObject{
 class ForgotPasswordObject with _$ForgotPasswordObject{
   factory ForgotPasswordObject(
       String email,
+      String otp,
+      String password,
       )=_ForgotPasswordObject;
 }

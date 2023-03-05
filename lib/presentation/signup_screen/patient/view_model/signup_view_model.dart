@@ -5,6 +5,7 @@ import 'package:doctor_hunt/presentation/base/base_view_model.dart';
 import 'package:doctor_hunt/presentation/common/freezed/freezed.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_render.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_renderer_imp.dart';
+import 'package:doctor_hunt/presentation/resources/string_manager.dart';
 
 class SignUpViewModel extends BaseViewModel
     with SignUpViewModelInput, SignUpViewModelOutput {
@@ -15,6 +16,8 @@ class SignUpViewModel extends BaseViewModel
       StreamController<String>.broadcast();
   final StreamController _passwordVisibilityController =
       StreamController<bool>.broadcast();
+  final StreamController<bool> isUserRegisterSuccessfullyStreamController =
+      StreamController.broadcast();
   final StreamController<void> _allInputsValid = StreamController.broadcast();
   SignupObject _signupObject = SignupObject("", "", "");
   final RegisterUseCase _registerUseCase;
@@ -28,17 +31,31 @@ class SignUpViewModel extends BaseViewModel
   }
 
   @override
-  signup() {
+  signup() async {
     inputState.add(
       LoadingState(
         stateRenderType: StateRenderType.popupLoadingState,
       ),
     );
-    _registerUseCase.execute(RegisterUseCaseInput(
-      name: _signupObject.name,
-      email: _signupObject.email,
-      password: _signupObject.password,
-    ));
+    (await _registerUseCase.execute(
+      RegisterUseCaseInput(
+          name: _signupObject.name,
+          email: _signupObject.email,
+          password: _signupObject.password),
+    ))
+        .fold((failure) {
+      inputState.add(
+        ErrorState(
+          stateRenderType: StateRenderType.popupErrorState,
+          message: failure.message,
+        ),
+      );
+    }, (data) {
+      inputState.add(
+        ContentState(),
+      );
+      isUserRegisterSuccessfullyStreamController.add(true);
+    });
   }
 
   @override
@@ -56,7 +73,6 @@ class SignUpViewModel extends BaseViewModel
 
   @override
   setEmail(String email) {
-    print(email);
     _emailController.add(email);
     if (_emailIsValid(email)) {
       _signupObject = _signupObject.copyWith(
@@ -108,18 +124,21 @@ class SignUpViewModel extends BaseViewModel
   Sink get inputPasswordIsVisible => _passwordVisibilityController.sink;
 
   @override
-  Stream<bool> get outNameIsValid => _nameController.stream.map(
-        (name) => _nameIsValid(name),
+  Sink get inputAreInputsValid => _allInputsValid.sink;
+
+  @override
+  Stream<String?> get outNameIsValid => _nameController.stream.map(
+        (name) => _nameOutError(name),
       );
 
   @override
-  Stream<bool> get outEmailIsValid => _emailController.stream.map(
-        (email) => _emailIsValid(email),
+  Stream<String?> get outEmailIsValid => _emailController.stream.map(
+        (email) => _emailOutError(email),
       );
 
   @override
-  Stream<bool> get outPasswordIsValid => _passwordController.stream.map(
-        (password) => _passwordIsValid(password),
+  Stream<String?> get outPasswordIsValid => _passwordController.stream.map(
+        (password) => _passwordOutError(password),
       );
 
   @override
@@ -128,24 +147,53 @@ class SignUpViewModel extends BaseViewModel
         (visibility) => visibility,
       );
 
-  _nameIsValid(String name) {
-    return name.isNotEmpty;
-  }
-
-  _emailIsValid(String email) {
-    return email.isNotEmpty;
-  }
-
-  _passwordIsValid(String password) {
-    return password.isNotEmpty;
-  }
-
-  @override
-  Sink get inputAreInputsValid => _allInputsValid.sink;
-
   @override
   Stream<bool> get outAreInputValid =>
       _allInputsValid.stream.map((_) => _areInputsValid());
+
+  String? _nameOutError(String name) {
+    if (name.isEmpty) {
+      return AppStrings.nameError1;
+    } else if (name.length <= 6) {
+      return AppStrings.nameError2;
+    } else {
+      return null;
+    }
+  }
+
+  _nameIsValid(String name) {
+    return name.length >= 6;
+  }
+
+  String? _emailOutError(String email) {
+    if (email.isEmpty) {
+      return AppStrings.emailError;
+    } else if (!RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email)) {
+      return AppStrings.emailError2;
+    }
+    return null;
+  }
+
+  _emailIsValid(String email) {
+    return RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email);
+  }
+
+  String? _passwordOutError(String password) {
+    if (password.isEmpty) {
+      return AppStrings.passwordError;
+    } else if (password.length < 6) {
+      return AppStrings.nameError2;
+    }
+    return null;
+  }
+
+  _passwordIsValid(String password) {
+    return password.length >= 6;
+  }
 
   bool _areInputsValid() {
     return _nameIsValid(_signupObject.name) &&
@@ -177,11 +225,11 @@ abstract class SignUpViewModelInput {
 }
 
 abstract class SignUpViewModelOutput {
-  Stream<bool> get outNameIsValid;
+  Stream<String?> get outNameIsValid;
 
-  Stream<bool> get outEmailIsValid;
+  Stream<String?> get outEmailIsValid;
 
-  Stream<bool> get outPasswordIsValid;
+  Stream<String?> get outPasswordIsValid;
 
   Stream<bool> get outPasswordIsVisible;
 

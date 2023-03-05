@@ -1,5 +1,4 @@
 
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:doctor_hunt/app/constant.dart';
@@ -11,24 +10,20 @@ part 'app_api.g.dart';
 abstract class  AppServicesClient{
   factory AppServicesClient(Dio dio,{String baseUrl}) =_AppServicesClient;
   @POST("/users/login/")
-  Future<AuthenticationResponse> login(
+  Future<LoginAuthenticationResponse> login(
       @Field("email") String email,
       @Field("password") String password,
       );
 
 
   @POST("/users/sendemail/")
-  Future<ForgotPasswordResponse> forgotPassword(@Field("email") String email,);
+  Future<SendEmailResponse> forgotPassword(@Field("email") String email,);
 
   @POST("/users/register/")
   Future<AuthenticationResponse> register(
       @Field("username") String userName,
       @Field("email") String email,
       @Field("password") String password,
-      // @Field("phone_number") String phoneNumber,
-      // @Part(value:"image",name: null ,contentType:  null,fileName:  null) File image,
-      // @Field("location") String location,
-      // @Field("date_birth") String dateBirth,
       );
   // @GET("/home")
   // Future<HomeResponse> home();

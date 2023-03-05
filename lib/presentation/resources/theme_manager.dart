@@ -58,11 +58,13 @@ ThemeData getApplicationTheme() {
         color: ColorManager.white,
         fontSize: FontSize.s22,
       ),
-      headlineLarge: getSemiBoldStyle(
+      // use in title for pages
+      headlineLarge: getMediumStyle(
         color: ColorManager.black,
         fontSize: FontSize.s24,
       ),
-      headlineMedium: getMediumStyle(
+      // used in sub title for pages
+      headlineMedium: getRegularStyle(
         color: ColorManager.grey,
         fontSize: FontSize.s14,
       ),
@@ -74,10 +76,10 @@ ThemeData getApplicationTheme() {
         color: ColorManager.primary,
         fontSize: FontSize.s14,
       ),
-      // used
-      bodySmall: getRegularStyle(
+      // used in google and facebook buttons
+       bodySmall: getLightStyle(
         color: ColorManager.grey,
-        fontSize: FontSize.s14,
+        fontSize: FontSize.s16,
       ),
       labelSmall: getRegularStyle(
         color: ColorManager.grey,
@@ -92,9 +94,8 @@ ThemeData getApplicationTheme() {
     inputDecorationTheme: InputDecorationTheme(
       //content padding
       contentPadding: const EdgeInsets.all(
-        AppPadding.p8,
+        AppPadding.p16,
       ),
-
       //error style
       errorStyle: getRegularStyle(
         color: ColorManager.error,
@@ -102,10 +103,9 @@ ThemeData getApplicationTheme() {
 
       //hint style
       hintStyle: getRegularStyle(
-        color: ColorManager.primary,
+        color: ColorManager.grey,
         fontSize: FontSize.s14,
       ),
-
       //label style
       labelStyle: getMediumStyle(
         color: ColorManager.primary,
@@ -114,10 +114,10 @@ ThemeData getApplicationTheme() {
       //enable border st4yle
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(
-          AppSize.s10,
+          AppSize.s12,
         ),
         borderSide: BorderSide(
-          color: ColorManager.lightGrey,
+          color: ColorManager.lightGrey.withOpacity(0.16),
           width: AppSize.s1_5,
         ),
       ),
@@ -125,7 +125,7 @@ ThemeData getApplicationTheme() {
       //focused Border style
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(
-          AppSize.s8,
+          AppSize.s12,
         ),
         borderSide: BorderSide(
           color: ColorManager.primary,
@@ -136,7 +136,7 @@ ThemeData getApplicationTheme() {
       //error border style
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(
-          AppSize.s8,
+          AppSize.s12,
         ),
         borderSide: BorderSide(
           color: ColorManager.error,
@@ -147,7 +147,7 @@ ThemeData getApplicationTheme() {
       //focused error border style
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(
-          AppSize.s8,
+          AppSize.s12,
         ),
         borderSide: BorderSide(
           color: ColorManager.primary,

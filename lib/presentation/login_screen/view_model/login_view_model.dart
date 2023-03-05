@@ -5,6 +5,7 @@ import 'package:doctor_hunt/presentation/base/base_view_model.dart';
 import 'package:doctor_hunt/presentation/common/freezed/freezed.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_render.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_renderer_imp.dart';
+import 'package:doctor_hunt/presentation/resources/string_manager.dart';
 
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInput, LoginViewModelOutput {
@@ -16,7 +17,8 @@ class LoginViewModel extends BaseViewModel
       StreamController<bool>.broadcast();
   final StreamController _areInputValidController =
       StreamController<void>.broadcast();
-
+  final StreamController<bool> isUserLoginSuccessfullyStreamController =
+      StreamController.broadcast();
   LoginObject _loginObject = LoginObject('', '');
   final LoginUseCase _loginUseCase;
 
@@ -40,26 +42,44 @@ class LoginViewModel extends BaseViewModel
   Sink get inputPasswordVisible => _visibilityController.sink;
 
   @override
-  login() {
-    inputState.add(LoadingState(stateRenderType: StateRenderType.popupLoadingState,),);
-
-    _loginUseCase.execute(LoginUseCaseInput(
-      _loginObject.email,
-      _loginObject.password,
-    ));
+  login() async {
+    inputState.add(
+      LoadingState(
+        stateRenderType: StateRenderType.popupLoadingState,
+      ),
+    );
+    (await _loginUseCase.execute(
+      LoginUseCaseInput(
+        email: _loginObject.email,
+        password: _loginObject.password,
+      ),
+    ))
+        .fold((failure) {
+      inputState.add(
+        ErrorState(
+          stateRenderType: StateRenderType.popupErrorState,
+          message: failure.message,
+        ),
+      );
+    }, (data) {
+      inputState.add(
+        ContentState(),
+      );
+      isUserLoginSuccessfullyStreamController.add(true);
+    });
   }
 
   @override
   Stream<bool> get outAreAllInputValid =>
-      _areInputValidController.stream.map((_) => _areinputValid());
+      _areInputValidController.stream.map((_) => _areInputValid());
 
   @override
-  Stream<bool> get outEmailIsValid =>
-      _emailController.stream.map((email) => _emailIsValid(email));
+  Stream<String?> get outEmailIsValid =>
+      _emailController.stream.map((email) => _emailOutError(email));
 
   @override
-  Stream<bool> get outPasswordIsValid =>
-      _passwordController.stream.map((password) => _passwordIsValid(password));
+  Stream<String?> get outPasswordIsValid =>
+      _passwordController.stream.map((password) => _passwordOutError(password));
 
   @override
   Stream<bool> get outPasswordIsVisible =>
@@ -100,15 +120,37 @@ class LoginViewModel extends BaseViewModel
     _visibilityController.add(visible);
   }
 
+  String? _emailOutError(String email) {
+    if (email.isEmpty) {
+      return AppStrings.emailError;
+    } else if (!RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email)) {
+      return AppStrings.emailError2;
+    }
+    return null;
+  }
+
   bool _emailIsValid(String email) {
-    return email.isNotEmpty;
+    return RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email);
   }
 
   bool _passwordIsValid(String password) {
-    return password.isNotEmpty;
+    return password.length >= 6;
   }
 
-  bool _areinputValid() {
+  String? _passwordOutError(String password) {
+    if (password.isEmpty) {
+      return AppStrings.passwordError;
+    } else if (password.length < 6) {
+      return AppStrings.nameError2;
+    }
+    return null;
+  }
+
+  bool _areInputValid() {
     return _emailIsValid(_loginObject.email) &&
         _passwordIsValid(_loginObject.password);
   }
@@ -133,9 +175,9 @@ abstract class LoginViewModelInput {
 }
 
 abstract class LoginViewModelOutput {
-  Stream<bool> get outEmailIsValid;
+  Stream<String?> get outEmailIsValid;
 
-  Stream<bool> get outPasswordIsValid;
+  Stream<String?> get outPasswordIsValid;
 
   Stream<bool> get outPasswordIsVisible;
 

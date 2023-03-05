@@ -9,6 +9,10 @@ class ErrorHandler implements Exception {
 
   ErrorHandler.handle(dynamic error) {
     if (error is DioError) {
+      print(error.type);
+      print(error.response?.data);
+      print(error.response?.statusCode);
+      print(error.response?.statusMessage);
       failure = _handlerError(error);
     } else {
       failure = DataSource.customDefault.getFailure();
@@ -28,14 +32,16 @@ Failure _handlerError(DioError error) {
     case DioErrorType.response:
       if (error.response != null &&
           error.response?.statusCode != null &&
-          error.response?.statusMessage != null) {
+          error.response?.data != null ) {
         return Failure(
           code: error.response?.statusCode ?? 0,
-          message: error.response?.statusMessage ?? "",
+          message: error.response?.data["non_field_errors"][0] ?? "",
         );
-      } else {
+      }
+      else {
         return DataSource.customDefault.getFailure();
       }
+
     case DioErrorType.cancel:
       return DataSource.cancel.getFailure();
     case DioErrorType.other:
@@ -159,9 +165,9 @@ class ResponseCode {
 class ResponseMessage {
   static String success = 'AppStrings.success.tr()'; // success with data
   static String noContent =
-      'AppStrings.success.tr()'; // success with no data (no content)
+      'AppStrings.success'; // success with no data (no content)
   static String badRequest =
-      'AppStrings.badRequestError.tr()'; // failure, API rejected request
+      AppStrings.badRequestError; // failure, API rejected request
   static String unAuthorised =
       'AppStrings.unauthorizedError.tr()'; // failure, user is not authorised
   static String forbidden =
@@ -179,6 +185,6 @@ class ResponseMessage {
 }
 
 class ApiInternalStatus {
-  static const int success = 0;
-  static const int failure = 1;
+  static const int success = 1;
+  static const int failure = 0;
 }

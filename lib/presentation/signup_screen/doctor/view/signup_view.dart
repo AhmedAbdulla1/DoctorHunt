@@ -134,14 +134,14 @@ class _RegisterAsDoctorViewState extends State<RegisterAsDoctorView> {
                     textEditingController: _nameController,
                     textInputType: TextInputType.name,
                     hintText: AppStrings.name,
-                    errorText: AppStrings.nameError,
+
                   ),
                   const SizedBox(height: AppSize.s14),
                   customTextFormField(
                     stream: _registerAsDoctorViewModel.outEmailIsValid,
                     textEditingController: _emailController,
                     hintText: AppStrings.email,
-                    errorText: AppStrings.emailError,
+
                   ),
                   const SizedBox(height: AppSize.s14),
                   customPasswordFormField(
@@ -168,7 +168,7 @@ class _RegisterAsDoctorViewState extends State<RegisterAsDoctorView> {
                               color: ColorManager.white,
                               boxShadow: [
                                 BoxShadow(
-                                  color: ColorManager.grey,
+                                  color: ColorManager.lightGrey.withOpacity(0.5),
                                   blurRadius: 5,
                                 ),
                               ],
@@ -199,7 +199,7 @@ class _RegisterAsDoctorViewState extends State<RegisterAsDoctorView> {
                               color: ColorManager.white,
                               boxShadow: [
                                 BoxShadow(
-                                  color: ColorManager.grey1,
+                                  color: ColorManager.lightGrey.withOpacity(0.5),
                                   blurRadius: 5,
                                 ),
                               ],
@@ -224,7 +224,7 @@ class _RegisterAsDoctorViewState extends State<RegisterAsDoctorView> {
                     textEditingController: _nameController,
                     textInputType: TextInputType.phone,
                     hintText: AppStrings.phone,
-                    errorText: AppStrings.phoneError,
+
                   ),
                   Row(
                     children: [

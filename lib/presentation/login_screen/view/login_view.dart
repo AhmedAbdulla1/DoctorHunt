@@ -12,7 +12,7 @@ import 'package:doctor_hunt/presentation/resources/routes_manager.dart';
 import 'package:doctor_hunt/presentation/resources/string_manager.dart';
 import 'package:doctor_hunt/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginView extends StatefulWidget {
@@ -31,7 +31,6 @@ class _LoginViewState extends State<LoginView> {
   bool visible = true;
 
   void _bind() {
-    // _appPreferences.setPressKeySignupScreen();
     _loginViewModel.start();
     _emailController.addListener(
       () => _loginViewModel.setEmail(
@@ -43,6 +42,15 @@ class _LoginViewState extends State<LoginView> {
         _passwordController.text,
       ),
     );
+    _loginViewModel.isUserLoginSuccessfullyStreamController.stream
+        .listen((isLoading) {
+      if (isLoading) {
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          //_appPreferences.setPressKeyLoginScreen();
+          Navigator.pushReplacementNamed(context, Routes.mainScreen);
+        });
+      }
+    });
   }
 
   @override
@@ -176,7 +184,6 @@ class _LoginViewState extends State<LoginView> {
                     stream: _loginViewModel.outEmailIsValid,
                     textEditingController: _emailController,
                     hintText: AppStrings.email,
-                    errorText: AppStrings.emailError,
                   ),
                   const SizedBox(height: AppSize.s14),
                   customPasswordFormField(
@@ -193,7 +200,6 @@ class _LoginViewState extends State<LoginView> {
                     stream: _loginViewModel.outAreAllInputValid,
                     onPressed: () {
                       _loginViewModel.login();
-                      Navigator.pushNamed(context, Routes.mainScreen);
                     },
                     text: AppStrings.login,
                   ),
@@ -225,6 +231,4 @@ class _LoginViewState extends State<LoginView> {
       ),
     );
   }
-
-
 }

@@ -548,6 +548,8 @@ abstract class _LoginObject implements LoginObject {
 /// @nodoc
 mixin _$ForgotPasswordObject {
   String get email => throw _privateConstructorUsedError;
+  String get otp => throw _privateConstructorUsedError;
+  String get password => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ForgotPasswordObjectCopyWith<ForgotPasswordObject> get copyWith =>
@@ -560,7 +562,7 @@ abstract class $ForgotPasswordObjectCopyWith<$Res> {
           $Res Function(ForgotPasswordObject) then) =
       _$ForgotPasswordObjectCopyWithImpl<$Res, ForgotPasswordObject>;
   @useResult
-  $Res call({String email});
+  $Res call({String email, String otp, String password});
 }
 
 /// @nodoc
@@ -578,11 +580,21 @@ class _$ForgotPasswordObjectCopyWithImpl<$Res,
   @override
   $Res call({
     Object? email = null,
+    Object? otp = null,
+    Object? password = null,
   }) {
     return _then(_value.copyWith(
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      otp: null == otp
+          ? _value.otp
+          : otp // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -596,7 +608,7 @@ abstract class _$$_ForgotPasswordObjectCopyWith<$Res>
       __$$_ForgotPasswordObjectCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String email});
+  $Res call({String email, String otp, String password});
 }
 
 /// @nodoc
@@ -611,11 +623,21 @@ class __$$_ForgotPasswordObjectCopyWithImpl<$Res>
   @override
   $Res call({
     Object? email = null,
+    Object? otp = null,
+    Object? password = null,
   }) {
     return _then(_$_ForgotPasswordObject(
       null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == otp
+          ? _value.otp
+          : otp // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -624,14 +646,18 @@ class __$$_ForgotPasswordObjectCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ForgotPasswordObject implements _ForgotPasswordObject {
-  _$_ForgotPasswordObject(this.email);
+  _$_ForgotPasswordObject(this.email, this.otp, this.password);
 
   @override
   final String email;
+  @override
+  final String otp;
+  @override
+  final String password;
 
   @override
   String toString() {
-    return 'ForgotPasswordObject(email: $email)';
+    return 'ForgotPasswordObject(email: $email, otp: $otp, password: $password)';
   }
 
   @override
@@ -639,11 +665,14 @@ class _$_ForgotPasswordObject implements _ForgotPasswordObject {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ForgotPasswordObject &&
-            (identical(other.email, email) || other.email == email));
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.otp, otp) || other.otp == otp) &&
+            (identical(other.password, password) ||
+                other.password == password));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, email);
+  int get hashCode => Object.hash(runtimeType, email, otp, password);
 
   @JsonKey(ignore: true)
   @override
@@ -654,10 +683,16 @@ class _$_ForgotPasswordObject implements _ForgotPasswordObject {
 }
 
 abstract class _ForgotPasswordObject implements ForgotPasswordObject {
-  factory _ForgotPasswordObject(final String email) = _$_ForgotPasswordObject;
+  factory _ForgotPasswordObject(
+          final String email, final String otp, final String password) =
+      _$_ForgotPasswordObject;
 
   @override
   String get email;
+  @override
+  String get otp;
+  @override
+  String get password;
   @override
   @JsonKey(ignore: true)
   _$$_ForgotPasswordObjectCopyWith<_$_ForgotPasswordObject> get copyWith =>

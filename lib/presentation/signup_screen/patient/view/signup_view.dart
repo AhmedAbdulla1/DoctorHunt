@@ -11,6 +11,7 @@ import 'package:doctor_hunt/presentation/resources/string_manager.dart';
 import 'package:doctor_hunt/presentation/resources/values_manager.dart';
 import 'package:doctor_hunt/presentation/signup_screen/patient/view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SignupView extends StatefulWidget {
@@ -47,6 +48,15 @@ class _SignupViewState extends State<SignupView> {
         _passwordController.text,
       ),
     );
+    _signUpViewModel.isUserRegisterSuccessfullyStreamController.stream
+        .listen((isLoading) {
+      if (isLoading) {
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+         // _appPreferences.setPressKeyLoginScreen();
+          Navigator.pushReplacementNamed(context, Routes.mainScreen);
+        });
+      }
+    });
   }
 
   @override
@@ -82,6 +92,7 @@ class _SignupViewState extends State<SignupView> {
               key: _globalKey,
               child: Column(
                 children: [
+                  const SizedBox(height: AppSize.s30,),
                   Text(
                     AppStrings.signupTitle,
                     style: Theme.of(context).textTheme.headlineLarge,
@@ -108,7 +119,7 @@ class _SignupViewState extends State<SignupView> {
                             color: ColorManager.white,
                             boxShadow: [
                               BoxShadow(
-                                color: ColorManager.lightGrey,
+                                color: ColorManager.lightGrey.withOpacity(0.50),
                                 blurRadius: 5,
                               ),
                             ],
@@ -143,7 +154,7 @@ class _SignupViewState extends State<SignupView> {
                             color: ColorManager.white,
                             boxShadow: [
                               BoxShadow(
-                                color: ColorManager.lightGrey,
+                                color:ColorManager.lightGrey.withOpacity(0.50),
                                 blurRadius: 5,
                               ),
                             ],
@@ -178,14 +189,13 @@ class _SignupViewState extends State<SignupView> {
                     textEditingController: _nameController,
                     textInputType: TextInputType.name,
                     hintText: AppStrings.name,
-                    errorText: AppStrings.nameError,
+
                   ),
                   const SizedBox(height: AppSize.s14),
                   customTextFormField(
                     stream: _signUpViewModel.outEmailIsValid,
                     textEditingController: _emailController,
                     hintText: AppStrings.email,
-                    errorText: AppStrings.emailError,
                   ),
                   const SizedBox(height: AppSize.s14),
                   customPasswordFormField(
@@ -197,15 +207,20 @@ class _SignupViewState extends State<SignupView> {
                       _signUpViewModel.setVisibility(visible);
                     },
                   ),
-                  // const SizedBox(height: AppSize.s14),
+                  const SizedBox(height: AppSize.s14),
                   Row(
                     children: [
-                      Radio(
-                          value: false,
-                          groupValue: false,
-                          onChanged: (value) {}),
+                      CircleAvatar(
+                        backgroundColor: ColorManager.grey.withOpacity(0.5),
+                        radius: 8,
+                      ),
+                      // Radio(
+                      //     value: false,
+                      //     groupValue: false,
+                      //     onChanged: (value) {}),
                       Text(AppStrings.privacy,
-                          style: Theme.of(context).textTheme.labelSmall)
+                          style: Theme.of(context).textTheme.labelSmall,
+                      ),
                     ],
                   ),
                   const SizedBox(height: AppSize.s50),
@@ -213,8 +228,6 @@ class _SignupViewState extends State<SignupView> {
                     stream: _signUpViewModel.outAreInputValid,
                     onPressed: () {
                       _signUpViewModel.signup();
-                      Navigator.pushReplacementNamed(
-                          context, Routes.mainScreen);
                     },
                     text: AppStrings.signup,
                   ),
@@ -222,7 +235,9 @@ class _SignupViewState extends State<SignupView> {
                     context: context,
                     onPressed: () {
                       Navigator.pushReplacementNamed(
-                          context, Routes.loginScreen,);
+                        context,
+                        Routes.loginScreen,
+                      );
                     },
                     text: AppStrings.haveAccount,
                   ),
@@ -234,7 +249,9 @@ class _SignupViewState extends State<SignupView> {
                     context: context,
                     onPressed: () {
                       Navigator.pushReplacementNamed(
-                          context, Routes.registerAsDoctorScreen,);
+                        context,
+                        Routes.registerAsDoctorScreen,
+                      );
                     },
                     text: AppStrings.registerAsADoctor,
                   )

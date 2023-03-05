@@ -1,62 +1,61 @@
 // import 'package:easy_localization/easy_localization.dart';
 import 'package:doctor_hunt/presentation/resources/color_manager.dart';
+import 'package:doctor_hunt/presentation/resources/font_manager.dart';
 import 'package:doctor_hunt/presentation/resources/string_manager.dart';
-import 'package:doctor_hunt/presentation/resources/values_manager.dart';
+import 'package:doctor_hunt/presentation/resources/style_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
 Widget customTextFormField({
-  required Stream<bool> stream,
+  required Stream<String?> stream,
   required TextEditingController textEditingController,
   TextInputType textInputType = TextInputType.emailAddress,
   required String hintText,
-  required String errorText,
 }) {
-  return StreamBuilder<bool>(
+  return StreamBuilder<String?>(
     stream: stream,
     builder: (context, snapshot) => TextFormField(
+      style: getLightStyle(
+        color: ColorManager.grey,
+        fontSize: FontSize.s16,
+      ),
       keyboardType: textInputType,
       controller: textEditingController,
-      decoration: InputDecoration(
-        hintText: hintText,
-        errorText: (snapshot.data ?? true) ? null : errorText,
-      ),
+      decoration: InputDecoration(hintText: hintText, errorText: snapshot.data),
     ),
   );
 }
 
 //
 Widget customPasswordFormField({
-  required Stream<bool> stream1,
+  required Stream<String?> stream1,
   required Stream<bool> stream2,
   required TextEditingController textEditingController,
   required VoidCallback onPressed,
+
 }) {
-  return StreamBuilder2<bool, bool>(
+  return StreamBuilder2<String?, bool>(
     streams: StreamTuple2(stream1, stream2),
     builder: (context, snapshot) => TextFormField(
+
+      style: getLightStyle(
+        color: ColorManager.grey,
+        fontSize: FontSize.s16,
+      ),
       keyboardType: TextInputType.visiblePassword,
       controller: textEditingController,
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-            borderRadius:BorderRadius.circular(20),
-            borderSide: BorderSide(
-              color: ColorManager.grey,
-              style: BorderStyle.solid,
-              width: AppSize.s1_5,
-            )
-        ),
         suffixIcon: IconButton(
           onPressed: onPressed,
-          icon: Icon(
-            !(snapshot.snapshot2.data ?? true)
-                ? Icons.visibility
-                : Icons.visibility_off,
-          ),
+          icon: !(snapshot.snapshot2.data ?? true)
+              ? Icon(
+                  Icons.visibility,
+                  color: ColorManager.lightGrey,
+                )
+              : Icon(Icons.visibility_off, color: ColorManager.lightGrey),
         ),
         hintText: AppStrings.password,
-        errorText:
-            (snapshot.snapshot1.data ?? true) ? null : AppStrings.passwordError,
+        errorText: snapshot.snapshot1.data,
       ),
       obscureText: snapshot.snapshot2.data ?? true,
     ),
