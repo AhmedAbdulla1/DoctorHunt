@@ -66,7 +66,7 @@ class RouteGenerator {
       case Routes.mainScreen:
         return MaterialPageRoute(builder: (_) {
           // initHomeModule();
-          return const MainView();
+          return  MainView();
         });
       // case Routes.settingScreen:
       //   return MaterialPageRoute(builder: (_) => const SettingView());

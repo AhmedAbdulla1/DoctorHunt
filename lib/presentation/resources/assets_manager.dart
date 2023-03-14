@@ -13,6 +13,9 @@ class ImageAssets{
   static const  String google= '$imagePath/google.svg';
   static const  String personal= '$imagePath/person.jpg';
   static const  String grad= '$imagePath/grad.png';
+  static const  String book= '$imagePath/book.svg';
+  static const  String chat= '$imagePath/chat.svg';
+
 
 
 
