@@ -14,6 +14,24 @@ class SliderViewObject {
   SliderViewObject(this.sliderObject, this.numOfSlides, this.currentIndex);
 }
 
+class DoctorData {
+  int id;
+  String username;
+  String email;
+  String phoneNumber;
+  String image;
+  String location;
+
+  DoctorData({
+    required this.id,
+    required this.email,
+    required this.username,
+    required this.phoneNumber,
+    required this.image,
+    required this.location,
+  });
+}
+
 class UserData {
   int id;
 
@@ -54,9 +72,90 @@ class LoginAuthentication {
     required this.token,
   });
 }
-class SendEmail{
+
+class SendEmail {
   String detail;
-  SendEmail({
-    required this.detail
-});
+
+  SendEmail({required this.detail});
+}
+
+// home model
+class Home {
+  UserData? userData;
+  List<LiveDoctors>? liveDoctors;
+  List<PopularDoctors>? popularDoctors;
+  List<FeatureDoctors>? featureDoctors;
+
+  Home({
+    required this.userData,
+    required this.liveDoctors,
+    required this.popularDoctors,
+    required this.featureDoctors,
+  });
+}
+
+class LiveDoctors {
+  int id ;
+  String username;
+  String image;
+  bool isLive;
+  int views;
+  String avgRating;
+  int price;
+  String specialist;
+
+  LiveDoctors({
+    required this.id,
+    required this.username,
+    required this.image,
+    required this.isLive,
+    required this.views,
+    required this.avgRating,
+    required this.price,
+    required this.specialist,
+  });
+}
+
+class PopularDoctors {
+  int id ;
+  String username;
+  String image;
+  bool isLive;
+  int views;
+  String avgRating;
+  int price;
+  String specialist;
+
+  PopularDoctors({
+    required this.id,
+    required this.username,
+    required this.image,
+    required this.isLive,
+    required this.views,
+    required this.avgRating,
+    required this.price,
+    required this.specialist,
+  });
+}
+
+class FeatureDoctors {
+  int id ;
+  String username;
+  String image;
+  bool isLive;
+  int views;
+  String avgRating;
+  int price;
+  String specialist;
+
+  FeatureDoctors({
+    required this.id,
+    required this.username,
+    required this.image,
+    required this.isLive,
+    required this.views,
+    required this.avgRating,
+    required this.price,
+    required this.specialist,
+  });
 }

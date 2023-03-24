@@ -7,11 +7,13 @@ import 'package:doctor_hunt/data/network/network_info.dart';
 import 'package:doctor_hunt/data/repository/repository_impl.dart';
 import 'package:doctor_hunt/domain/repository/repository.dart';
 import 'package:doctor_hunt/domain/usecase/forgot_password_usecase.dart';
+import 'package:doctor_hunt/domain/usecase/home_usecase.dart';
 import 'package:doctor_hunt/domain/usecase/login_usecase.dart';
 import 'package:doctor_hunt/domain/usecase/register_usecase.dart';
 import 'package:doctor_hunt/domain/usecase/sign_as_doctor_usecase.dart';
 import 'package:doctor_hunt/presentation/forgot_password/forgot_password_view_mode.dart';
 import 'package:doctor_hunt/presentation/login_screen/view_model/login_view_model.dart';
+import 'package:doctor_hunt/presentation/main_screen/pages/home_screen/view_model/home_view_model.dart';
 import 'package:doctor_hunt/presentation/on_boarding_screen/view_model/on_boarding_view_model.dart';
 import 'package:doctor_hunt/presentation/signup_screen/doctor/view_model/signup_view_model.dart';
 import 'package:doctor_hunt/presentation/signup_screen/patient/view_model/signup_view_model.dart';
@@ -121,14 +123,14 @@ initForgotPasswordModule() {
   }
 }
 //
-// initHomeModule() {
-//   if (!GetIt.I.isRegistered<HomeUseCase>()) {
-//     instance.registerFactory<HomeUseCase>(
-//         () => HomeUseCase(instance<Repository>()));
-//     instance.registerFactory<HomeViewModel>(
-//         () => HomeViewModel(instance<HomeUseCase>()));
-//   }
-// }
+initHomeModule() {
+  if (!GetIt.I.isRegistered<HomeUseCase>()) {
+    instance.registerFactory<HomeUseCase>(
+        () => HomeUseCase(instance<Repository>()));
+    instance.registerFactory<HomeViewModel>(
+        () => HomeViewModel(instance<HomeUseCase>()));
+  }
+}
 // // initStoreDetailsModule() {
 // //   if (!GetIt.I.isRegistered<StoreDetailsUseCase>()) {
 // //     instance.registerFactory<StoreDetailsUseCase>(

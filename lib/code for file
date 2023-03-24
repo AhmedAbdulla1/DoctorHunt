@@ -1,0 +1,73 @@
+flutter pub get && flutter pub run build_runner build --delete-conflicting-outputs
+
+
+{
+    "user_data": {
+        "id": 16,
+        "email": "ahmedelabassy14@gmail.com",
+        "username": "ahmed_elabassy",
+        "phone_number": null,
+        "image": null,
+        "location": null,
+        "date_birth": null,
+        "is_doctor": false
+    },
+    "lives_doctors": [
+        {
+            "id": 20,
+            "username": "menaAhmed",
+            "image": "/media/Photos/23/03/23/live1_OnuV8xK.png",
+            "is_live": true,
+            "views": 0,
+            "avg_rating": "0.00",
+            "price": 300,
+            "specialist": null
+        }
+    ],
+    "popular_doctors": [
+        {
+            "id": 18,
+            "username": "mohmed ahmed",
+            "image": "/media/Photos/23/03/23/live1.png",
+            "is_live": false,
+            "views": 0,
+            "avg_rating": "0.00",
+            "price": 0,
+            "specialist": null
+        },
+        {
+            "id": 19,
+            "username": "mona",
+            "image": null,
+            "is_live": false,
+            "views": 0,
+            "avg_rating": "0.00",
+            "price": 0,
+            "specialist": null
+        },
+        {
+            "id": 20,
+            "username": "menaAhmed",
+            "image": "/media/Photos/23/03/23/live1_OnuV8xK.png",
+            "is_live": true,
+            "views": 0,
+            "avg_rating": "0.00",
+            "price": 300,
+            "specialist": null
+        }
+    ],
+    "feature_doctors": [
+        {
+            "doc": {
+                "id": 19,
+                "username": "mona",
+                "image": null,
+                "is_live": false,
+                "views": 0,
+                "avg_rating": "0.00",
+                "price": 0,
+                "specialist": null
+            }
+        }
+    ]
+}

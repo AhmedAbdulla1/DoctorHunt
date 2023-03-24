@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:doctor_hunt/app/constant.dart';
 import 'package:doctor_hunt/domain/usecase/login_usecase.dart';
 import 'package:doctor_hunt/presentation/base/base_view_model.dart';
 import 'package:doctor_hunt/presentation/common/freezed/freezed.dart';
@@ -65,6 +66,8 @@ class LoginViewModel extends BaseViewModel
       inputState.add(
         ContentState(),
       );
+      print(data.token);
+      Constant.token="Token ${data.token}";
       isUserLoginSuccessfullyStreamController.add(true);
     });
   }

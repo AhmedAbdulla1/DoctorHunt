@@ -172,6 +172,37 @@ class RepositoryImpl implements Repository {
     throw UnimplementedError();
   }
 
+  @override
+  Future<Either<Failure, Home>> home(String token) async{
+    if (await _networkInfo.isConnected) {
+      final HomeResponse response = await _remoteDataSource.homeResponse(token);
+      try {
+        if (response.status == ApiInternalStatus.success) {
+          // _localDataSource.saveHomeToCache(response);
+          return Right(
+            response.toDomain(),
+          );
+        } else {
+          return Left(
+            Failure(
+              code: ApiInternalStatus.failure,
+              message: response.message ?? ResponseMessage.customDefault,
+            ),
+          );
+        }
+      } catch (error) {
+        return Left(
+          ErrorHandler.handle(error).failure,
+        );
+      }
+    } else {
+      return Left(
+        DataSource.noInternetConnection.getFailure(),
+      );
+    }
+  }
+  }
+
 // @override
 // Future<Either<Failure, String>> forgotPassword(String email) async {
 //   if (await _networkInfo.isConnected) {
@@ -277,4 +308,5 @@ class RepositoryImpl implements Repository {
 //     }
 //   }
 // }
-}
+
+

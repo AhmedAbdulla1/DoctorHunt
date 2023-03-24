@@ -8,9 +8,9 @@ extension UserDataResponseMapper on UserDataResponse? {
     return UserData(
       id: this?.id.orZero() ?? 0,
       email: this?.email.orEmpty() ?? Constant.empty,
-      username: this?.image.orEmpty() ?? Constant.empty,
+      username: this?.username.orEmpty() ?? Constant.empty,
       phoneNumber: this?.phoneNumber.orEmpty() ?? Constant.empty,
-      image: this?.image.orEmpty() ?? Constant.empty,
+      image: this?.image.orEmpty() ?? Constant.image,
       location: this?.location.orEmpty() ?? Constant.empty,
       dateBirth: this?.dateBirth.orEmpty() ?? Constant.empty,
     );
@@ -42,94 +42,82 @@ extension SendEmailResponsMapper on SendEmailResponse? {
   }
 }
 
-// // extension CustomerResponseMapper on CustomerResponse? {
-// //   Customer toDomain() {
-// //     return Customer(
-// //       id: this?.id.orEmpty() ?? "",
-// //       name: this?.name.orEmpty() ?? "",
-// //       numOfNotifications: this?.numOfNotifications.orZero() ?? 0,
-// //     );
-// //   }
-// }
+
+extension FeatureDoctorResponseMapper on FeatureDoctorsResponse? {
+  FeatureDoctors toDomain() {
+    return FeatureDoctors(
+      id: this?.id.orZero()??Constant.zero,
+      username: this?.username.orEmpty() ?? Constant.empty,
+      image: this?.image.orEmpty() ?? Constant.image,
+      avgRating: this?.avgRating.orEmpty()??Constant.zero.toString(),
+      isLive: this?.isLive??false,
+      price: this?.price.orZero()??Constant.zero,
+      views: this?.views.orZero()??Constant.zero,
+      specialist: this?.specialist.orEmpty()??Constant.empty,
+
+    );
+  }
+}
+
+extension PopularDoctorsResponseMapper on PopularDoctorsResponse? {
+  PopularDoctors toDomain() {
+    return PopularDoctors(
+      id: this?.id.orZero()??Constant.zero,
+      username: this?.username.orEmpty() ?? Constant.empty,
+      image: this?.image.orEmpty() ?? Constant.image,
+      avgRating: this?.avgRating.orEmpty()??Constant.zero.toString(),
+      isLive: this?.isLive??false,
+      price: this?.price.orZero()??Constant.zero,
+      views: this?.views.orZero()??Constant.zero,
+      specialist: this?.specialist.orEmpty()??Constant.empty,
+    );
+  }
+}
+
+extension LiveDoctorResponsMapper on LiveDoctorResponse? {
+  LiveDoctors toDomain() {
+    return LiveDoctors(
+      id: this?.id.orZero()??Constant.zero,
+      username: this?.username.orEmpty() ?? Constant.empty,
+      image: this?.image.orEmpty() ?? Constant.image,
+      avgRating: this?.avgRating.orEmpty()??Constant.zero.toString(),
+      isLive: this?.isLive??false,
+      price: this?.price.orZero()??Constant.zero,
+      views: this?.views.orZero()??Constant.zero,
+      specialist: this?.specialist.orEmpty()??Constant.empty,
+    );
+  }
+}
 //
-// // extension ContactsResponseMapper on ContactsResponse? {
-// //   Contact toDomain() {
-// //     return Contact(
-// //       phone: this?.phone.orEmpty() ?? Constant.empty,
-// //       email: this?.email.orEmpty() ?? Constant.empty,
-// //       link: this?.link.orEmpty() ?? Constant.empty,
-// //     );
-// //   }
-// // }
-//
-// // extension AuthenticationResponseMapper on AuthenticationResponse? {
-// //   Authentication toDomain() {
-// //     return Authentication(
-// //       customer: this?.customer.toDomain(),
-// //       contact: this?.contacts.toDomain(),
-// //     );
-// //   }
-// // }
-//
-// extension ServicesResponseMapper on ServicesResponse? {
-//   Service toDomain() {
-//     return Service(
-//       id: this?.id.orZero() ?? Constant.zero,
-//       title: this?.title.orEmpty() ?? Constant.empty,
-//       image: this?.image.orEmpty() ?? Constant.image,
-//     );
-//   }
-// }
-//
-// extension StoresResponseMapper on StoresResponse? {
-//   Stores toDomain() {
-//     return Stores(
-//       id: this?.id.orZero() ?? Constant.zero,
-//       title: this?.title.orEmpty() ?? Constant.empty,
-//       image: this?.image.orEmpty() ?? Constant.image,
-//     );
-//   }
-// }
-//
-// extension BannersResponseMapper on BannersResponse? {
-//   Banners toDomain() {
-//     return Banners(
-//       id: this?.id.orZero() ?? Constant.zero,
-//       link: this?.link.orEmpty() ?? Constant.empty,
-//       title: this?.title.orEmpty() ?? Constant.empty,
-//       image: this?.image.orEmpty() ?? Constant.image,
-//     );
-//   }
-// }
-//
-// extension HomeResponseMapper on HomeResponse? {
-//   Home toDomain() {
-//     List<Service> services = (this
-//                 ?.data
-//                 ?.services
-//                 ?.map((serviceResponse) => serviceResponse.toDomain()) ??
-//             const Iterable.empty())
-//         .cast<Service>()
-//         .toList();
-//     List<Stores> stores = (this
-//                 ?.data
-//                 ?.stores
-//                 ?.map((storesResponse) => storesResponse.toDomain()) ??
-//             const Iterable.empty())
-//         .cast<Stores>()
-//         .toList();
-//     List<Banners> banners = (this
-//                 ?.data
-//                 ?.banners
-//                 ?.map((bannerResponse) => bannerResponse.toDomain()) ??
-//             const Iterable.empty())
-//         .cast<Banners>()
-//         .toList();
-//     Data? data = Data(services: services, banners: banners, stores: stores);
-//     return Home(data: data);
-//   }
-// }
-//
+extension HomeResponseMapper on HomeResponse? {
+  Home toDomain() {
+    UserData? userData =this?.data?.userData.toDomain() ;
+    List<LiveDoctors> liveDoctors = (this
+                ?.data
+                ?.liveDoctors
+                ?.map((liveDoctorsResponse) => liveDoctorsResponse.toDomain()) ??
+            const Iterable.empty())
+        .cast<LiveDoctors>()
+        .toList();
+    List<PopularDoctors> popularDoctors = (this
+                ?.data
+                ?.popularDoctors
+                ?.map((popularDcotorsResponse) => popularDcotorsResponse.toDomain()) ??
+            const Iterable.empty())
+        .cast<PopularDoctors>()
+        .toList();
+    List<FeatureDoctors> featureDoctors = (this
+                ?.data
+                ?.featureDoctors
+                ?.map((featureDoctorsResponse) => featureDoctorsResponse.toDomain()) ??
+            const Iterable.empty())
+        .cast<FeatureDoctors>()
+        .toList();
+
+    return Home(userData: userData, liveDoctors: liveDoctors, popularDoctors: popularDoctors,featureDoctors: featureDoctors,);
+  }
+}
+
 // extension StoresDetailsResponseMapper on StoresDetailsResponse? {
 //   StoresDetails toDomain() {
 //     return StoresDetails(

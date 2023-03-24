@@ -80,6 +80,7 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
+    - assets/images/
     - assets/images/back_ground_image.png
     - assets/images/splash.png
     - assets/images/onBoarding1.png

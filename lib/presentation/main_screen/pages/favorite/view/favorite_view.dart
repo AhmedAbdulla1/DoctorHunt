@@ -14,7 +14,8 @@ class _FavoriteViewState extends State<FavoriteView> {
         children:const  [
           Center(
             child: Text(''
-                'favorite'),
+                'favorite'
+            ,style: TextStyle(color: Colors.black),),
           ),
         ]
     );

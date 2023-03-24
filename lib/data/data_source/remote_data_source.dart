@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:doctor_hunt/app/constant.dart';
 import 'package:doctor_hunt/data/network/app_api.dart';
 import 'package:doctor_hunt/data/network/requests.dart';
 import 'package:doctor_hunt/data/response/responses.dart';
@@ -14,7 +15,7 @@ abstract class RemoteDataSource {
   Future<AuthenticationResponse> registerResponse(
       RegisterRequest registerRequest,
       );
-  // Future<HomeResponse>homeResponse();
+  Future<HomeResponse>homeResponse(String token);
   // Future<StoresDetailsResponse>storeDetailsResponse();
 
 }
@@ -49,10 +50,12 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       email
     );
   }
-  // @override
-  // Future<HomeResponse> homeResponse()async {
-  //   return await _appServicesClient.home();
-  // }
+  @override
+  Future<HomeResponse> homeResponse(String token)async {
+    return await _appServicesClient.home(
+      Constant.token
+    );
+  }
   // @override
   // Future<StoresDetailsResponse> storeDetailsResponse()async {
   //   return await _appServicesClient.getStoreDetails();

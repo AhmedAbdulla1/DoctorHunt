@@ -89,3 +89,119 @@ Map<String, dynamic> _$SendEmailResponseToJson(SendEmailResponse instance) =>
       'message': instance.message,
       'otp': instance.otp,
     };
+
+HomeResponse _$HomeResponseFromJson(Map<String, dynamic> json) => HomeResponse(
+      json['data'] == null
+          ? null
+          : DataResponse.fromJson(json['data'] as Map<String, dynamic>),
+    )
+      ..status = json['status'] as int?
+      ..message = json['message'] as String?;
+
+Map<String, dynamic> _$HomeResponseToJson(HomeResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'data': instance.data,
+    };
+
+LiveDoctorResponse _$LiveDoctorResponseFromJson(Map<String, dynamic> json) =>
+    LiveDoctorResponse(
+      json['id'] as int?,
+      json['username'] as String?,
+      json['image'] as String?,
+      json['is_live'] as bool?,
+      json['views'] as int?,
+      json['avg_rating'] as String?,
+      json['price'] as int?,
+      json['specialist'] as String?,
+    );
+
+Map<String, dynamic> _$LiveDoctorResponseToJson(LiveDoctorResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'username': instance.username,
+      'image': instance.image,
+      'is_live': instance.isLive,
+      'views': instance.views,
+      'avg_rating': instance.avgRating,
+      'price': instance.price,
+      'specialist': instance.specialist,
+    };
+
+PopularDoctorsResponse _$PopularDoctorsResponseFromJson(
+        Map<String, dynamic> json) =>
+    PopularDoctorsResponse(
+      json['id'] as int?,
+      json['username'] as String?,
+      json['image'] as String?,
+      json['is_live'] as bool?,
+      json['views'] as int?,
+      json['avg_rating'] as String?,
+      json['price'] as int?,
+      json['specialist'] as String?,
+    );
+
+Map<String, dynamic> _$PopularDoctorsResponseToJson(
+        PopularDoctorsResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'username': instance.username,
+      'image': instance.image,
+      'is_live': instance.isLive,
+      'views': instance.views,
+      'avg_rating': instance.avgRating,
+      'price': instance.price,
+      'specialist': instance.specialist,
+    };
+
+FeatureDoctorsResponse _$FeatureDoctorsResponseFromJson(
+        Map<String, dynamic> json) =>
+    FeatureDoctorsResponse(
+      json['id'] as int?,
+      json['username'] as String?,
+      json['image'] as String?,
+      json['is_live'] as bool?,
+      json['views'] as int?,
+      json['avg_rating'] as String?,
+      json['price'] as int?,
+      json['specialist'] as String?,
+    );
+
+Map<String, dynamic> _$FeatureDoctorsResponseToJson(
+        FeatureDoctorsResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'username': instance.username,
+      'image': instance.image,
+      'is_live': instance.isLive,
+      'views': instance.views,
+      'avg_rating': instance.avgRating,
+      'price': instance.price,
+      'specialist': instance.specialist,
+    };
+
+DataResponse _$DataResponseFromJson(Map<String, dynamic> json) => DataResponse(
+      json['userData'] == null
+          ? null
+          : UserDataResponse.fromJson(json['userData'] as Map<String, dynamic>),
+      (json['liveDoctors'] as List<dynamic>?)
+          ?.map((e) => LiveDoctorResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      (json['popularDoctors'] as List<dynamic>?)
+          ?.map(
+              (e) => PopularDoctorsResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      (json['featureDoctors'] as List<dynamic>?)
+          ?.map(
+              (e) => FeatureDoctorsResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$DataResponseToJson(DataResponse instance) =>
+    <String, dynamic>{
+      'userData': instance.userData,
+      'liveDoctors': instance.liveDoctors,
+      'popularDoctors': instance.popularDoctors,
+      'featureDoctors': instance.featureDoctors,
+    };

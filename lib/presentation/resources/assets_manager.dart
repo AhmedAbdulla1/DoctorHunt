@@ -15,6 +15,11 @@ class ImageAssets{
   static const  String grad= '$imagePath/grad.png';
   static const  String book= '$imagePath/book.svg';
   static const  String chat= '$imagePath/chat.svg';
+  static const  String live= '$imagePath/live2.png';
+  static const String image='$imagePath/image1.png';
+
+
+
 
 
 

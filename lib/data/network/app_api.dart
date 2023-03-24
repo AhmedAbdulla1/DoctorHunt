@@ -25,9 +25,11 @@ abstract class  AppServicesClient{
       @Field("email") String email,
       @Field("password") String password,
       );
-  // @GET("/home")
-  // Future<HomeResponse> home();
-  //
+  @GET("/main")
+  Future<HomeResponse> home(
+      @Field("Authorization") String authorization,
+      );
+
   // @GET("/store_details")
   // Future<StoresDetailsResponse> getStoreDetails();
 

@@ -98,112 +98,163 @@ class SendEmailResponse extends BaseResponse {
   Map<String, dynamic> toJson() => _$SendEmailResponseToJson(this);
 }
 
-// @JsonSerializable()
-// class HomeResponse extends BaseResponse {
-//   @JsonKey(name: 'data')
-//   DataResponse? data;
-//
-//   HomeResponse(this.data);
-//
-//   //from json
-//   factory HomeResponse.fromJson(dynamic json) => _$HomeResponseFromJson(json);
-//
-//   // to json
-//   Map<String, dynamic> toJson() => _$HomeResponseToJson(this);
-// }
-//
-// @JsonSerializable()
-// class ServicesResponse {
-//   @JsonKey(name: 'id')
-//   int? id;
-//   @JsonKey(name: 'title')
-//   String? title;
-//   @JsonKey(name: 'image')
-//   String? image;
-//
-//   ServicesResponse(
-//     this.id,
-//     this.title,
-//     this.image,
-//   );
-//
-//   factory ServicesResponse.fromJson(Map<String, dynamic> json) =>
-//       _$ServicesResponseFromJson(json);
-//
-//   //to json
-//   Map<String, dynamic> toJson() => _$ServicesResponseToJson(this);
-// }
 
-// @JsonSerializable()
-// class BannersResponse {
-//   @JsonKey(name: 'id')
-//   int? id;
-//   @JsonKey(name: 'link')
-//   String? link;
-//   @JsonKey(name: 'title')
-//   String? title;
-//   @JsonKey(name: 'image')
-//   String? image;
-//
-//   BannersResponse(
-//     this.id,
-//     this.link,
-//     this.title,
-//     this.image,
-//   );
-//
-//   factory BannersResponse.fromJson(Map<String, dynamic> json) =>
-//       _$BannersResponseFromJson(json);
-//
-//   //to json
-//   Map<String, dynamic> toJson() => _$BannersResponseToJson(this);
-// }
 
-// @JsonSerializable()
-// class StoresResponse {
-//   @JsonKey(name: 'id')
-//   int? id;
-//   @JsonKey(name: 'title')
-//   String? title;
-//   @JsonKey(name: 'image')
-//   String? image;
-//
-//   StoresResponse(
-//     this.id,
-//     this.title,
-//     this.image,
-//   );
-//
-//   factory StoresResponse.fromJson(Map<String, dynamic> json) =>
-//       _$StoresResponseFromJson(json);
-//
-//   //to json
-//   Map<String, dynamic> toJson() => _$StoresResponseToJson(this);
-// }
+@JsonSerializable()
+class HomeResponse extends BaseResponse {
+  @JsonKey(name: 'data')
+  DataResponse? data;
 
-// @JsonSerializable()
-// class DataResponse {
-//   @JsonKey(name: 'services')
-//   List<ServicesResponse>? services;
-//   @JsonKey(name: 'banners')
-//   List<BannersResponse>? banners;
-//   @JsonKey(name: 'stores')
-//   List<StoresResponse>? stores;
-//
-//   DataResponse(
-//     this.services,
-//     this.banners,
-//     this.stores,
-//   );
-//
-//   //from json
-//   factory DataResponse.fromJson(Map<String, dynamic> json) =>
-//       _$DataResponseFromJson(json);
-//
-//   //to json
-//   Map<String, dynamic> toJson() => _$DataResponseToJson(this);
-// }
-//
+  HomeResponse(this.data);
+
+  //from json
+  factory HomeResponse.fromJson(dynamic json) => _$HomeResponseFromJson(json);
+
+  // to json
+  Map<String, dynamic> toJson() => _$HomeResponseToJson(this);
+}
+
+@JsonSerializable()
+class LiveDoctorResponse {
+  @JsonKey(name: 'id')
+  int? id;
+  @JsonKey(name: 'username')
+  String? username;
+  @JsonKey(name: 'image')
+  String? image;
+  @JsonKey(name: 'is_live')
+  bool? isLive;
+  @JsonKey(name: 'views')
+  int? views;
+  @JsonKey(name: 'avg_rating')
+  String? avgRating;
+  @JsonKey(name: 'price')
+  int? price;
+  @JsonKey(name: 'specialist')
+  String? specialist;
+
+
+  LiveDoctorResponse(
+    this.id,
+    this.username,
+    this.image,
+    this.isLive,
+    this.views,
+    this.avgRating,
+    this.price,
+    this.specialist,
+  );
+
+  factory LiveDoctorResponse.fromJson(Map<String, dynamic> json) =>
+      _$LiveDoctorResponseFromJson(json);
+
+  //to json
+  Map<String, dynamic> toJson() => _$LiveDoctorResponseToJson(this);
+}
+
+
+
+@JsonSerializable()
+class PopularDoctorsResponse {
+  @JsonKey(name: 'id')
+  int? id;
+  @JsonKey(name: 'username')
+  String? username;
+  @JsonKey(name: 'image')
+  String? image;
+  @JsonKey(name: 'is_live')
+  bool? isLive;
+  @JsonKey(name: 'views')
+  int? views;
+  @JsonKey(name: 'avg_rating')
+  String? avgRating;
+  @JsonKey(name: 'price')
+  int? price;
+  @JsonKey(name: 'specialist')
+  String? specialist;
+
+
+  PopularDoctorsResponse(
+      this.id,
+      this.username,
+      this.image,
+      this.isLive,
+      this.views,
+      this.avgRating,
+      this.price,
+      this.specialist,
+      );
+
+  factory PopularDoctorsResponse.fromJson(Map<String, dynamic> json) =>
+      _$PopularDoctorsResponseFromJson(json);
+
+  //to json
+  Map<String, dynamic> toJson() => _$PopularDoctorsResponseToJson(this);
+}
+
+@JsonSerializable()
+class FeatureDoctorsResponse {
+  @JsonKey(name: 'id')
+  int? id;
+  @JsonKey(name: 'username')
+  String? username;
+  @JsonKey(name: 'image')
+  String? image;
+  @JsonKey(name: 'is_live')
+  bool? isLive;
+  @JsonKey(name: 'views')
+  int? views;
+  @JsonKey(name: 'avg_rating')
+  String? avgRating;
+  @JsonKey(name: 'price')
+  int? price;
+  @JsonKey(name: 'specialist')
+  String? specialist;
+
+
+  FeatureDoctorsResponse(
+      this.id,
+      this.username,
+      this.image,
+      this.isLive,
+      this.views,
+      this.avgRating,
+      this.price,
+      this.specialist,
+      );
+
+  factory FeatureDoctorsResponse.fromJson(Map<String, dynamic> json) =>
+      _$FeatureDoctorsResponseFromJson(json);
+
+  //to json
+  Map<String, dynamic> toJson() => _$FeatureDoctorsResponseToJson(this);
+}
+
+@JsonSerializable()
+class DataResponse {
+  @JsonKey(name: 'userData')
+  UserDataResponse? userData;
+  @JsonKey(name: 'liveDoctors')
+  List<LiveDoctorResponse>? liveDoctors;
+  @JsonKey(name: 'popularDoctors')
+  List<PopularDoctorsResponse>? popularDoctors;
+  @JsonKey(name: 'featureDoctors')
+  List<FeatureDoctorsResponse>? featureDoctors;
+  DataResponse(
+    this.userData,
+    this.liveDoctors,
+    this.popularDoctors,
+      this.featureDoctors,
+  );
+
+  //from json
+  factory DataResponse.fromJson(Map<String, dynamic> json) =>
+      _$DataResponseFromJson(json);
+
+  //to json
+  Map<String, dynamic> toJson() => _$DataResponseToJson(this);
+}
+
 // @JsonSerializable()
 // class StoresDetailsResponse extends BaseResponse {
 //   @JsonKey(name: 'id')

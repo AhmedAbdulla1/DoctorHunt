@@ -77,13 +77,17 @@ ThemeData getApplicationTheme() {
         fontSize: FontSize.s14,
       ),
       // used in google and facebook buttons
-       bodySmall: getLightStyle(
+      bodySmall: getLightStyle(
         color: ColorManager.grey,
         fontSize: FontSize.s16,
       ),
       labelSmall: getRegularStyle(
         color: ColorManager.grey,
         fontSize: FontSize.s10,
+      ),
+      labelMedium: getMediumStyle(
+        color: ColorManager.black,
+        fontSize: FontSize.s18,
       ),
       labelLarge: getBoldStyle(
         color: ColorManager.black,

@@ -23,6 +23,11 @@ class AppStrings {
   static const String password = 'Password';
   static const String passwordError = 'Please enter your password';
 
+  static const String liveDoctors="Live Doctors";
+  static const String popularDoctor="Popular Doctor";
+  static const String featureDoctor="Feature Doctor";
+  static const String seeAll= "See all >>";
+
   static const String login = 'LOGIN';
   static const String signup = 'SIGN UP';
   static const String google = 'Google';
@@ -76,5 +81,5 @@ class AppStrings {
   static const String timeoutError = "timeout_error";
   static const String defaultError = "default_error";
   static const String cacheError = "cache_error";
-  static const String noInternetError = "no_internet_error";
+  static const String noInternetError = "No Internet";
 }

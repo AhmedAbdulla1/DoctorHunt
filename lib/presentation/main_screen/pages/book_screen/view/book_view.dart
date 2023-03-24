@@ -14,8 +14,10 @@ class _BookViewState extends State<BookView> {
         children:const  [
           Center(
             child: Text(''
-                'Book'),
-          ),
+                'Book',
+                style: TextStyle(color: Colors.black),),
+
+    ),
         ]
     );
   }
