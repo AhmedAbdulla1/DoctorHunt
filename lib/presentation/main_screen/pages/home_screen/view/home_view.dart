@@ -2,8 +2,8 @@ import 'package:doctor_hunt/app/di.dart';
 import 'package:doctor_hunt/domain/models/models.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_renderer_imp.dart';
 import 'package:doctor_hunt/presentation/main_screen/pages/home_screen/view_model/home_view_model.dart';
+import 'package:doctor_hunt/presentation/resources/assets_manager.dart';
 import 'package:doctor_hunt/presentation/resources/color_manager.dart';
-import 'package:doctor_hunt/presentation/resources/font_manager.dart';
 import 'package:doctor_hunt/presentation/resources/routes_manager.dart';
 import 'package:doctor_hunt/presentation/resources/string_manager.dart';
 import 'package:doctor_hunt/presentation/resources/values_manager.dart';
@@ -20,7 +20,7 @@ class _HomeViewState extends State<HomeView> {
   final HomeViewModel _homeViewModel = instance<HomeViewModel>();
 
   _bind() {
-    _homeViewModel.start();
+     _homeViewModel.start();
   }
 
   @override
@@ -39,34 +39,38 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return StreamBuilder<StateFlow>(
       stream: _homeViewModel.outputState,
-      builder: (context, snapshot) =>
-          snapshot.data?.getScreenWidget(
+      builder: (context, snapshot) {
+          print(snapshot.data);
+          return snapshot.data?.getScreenWidget(
             context,
             _getContent(),
             () {
               _homeViewModel.start();
             },
           ) ??
-          _getContent(),
+          _getContent();}
     );
   }
-
+  UserData _userData=UserData(id: 10, email: 'email', username: 'username', phoneNumber: 'phoneNumber', image: ImageAssets.personal, location: 'location', dateBirth: 'dateBirth');
   Widget _getContent() {
     return SingleChildScrollView(
       child: StreamBuilder<HomeViewObject>(
           stream: _homeViewModel.outputHomeData,
           builder: (context, snapshot) {
+            // print(snapshot.data);
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _getAppBar(snapshot.data!.userData),
+                _getAppBar(_userData),
                 const SizedBox(
                   height: 42,
                 ),
                 _getSection(AppStrings.liveDoctors),
-                // _getLiveDoctors(),
+                _getLiveDoctors(),
                 _getSection(AppStrings.popularDoctor),
                 // _getStoresWidgets(),
+                _getSection(AppStrings.featureDoctor),
+
               ],
             );
           }),
@@ -98,44 +102,37 @@ class _HomeViewState extends State<HomeView> {
                   children: [
                     Text(
                       'Hi ${userData.username}',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeightManager.light,
-                        color: ColorManager.white,
-                      ),
+                      style: Theme.of(context).textTheme.displayLarge,
                     ),
                     Text(
-                      'Find Your Doctor',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeightManager.bold,
-                        color: ColorManager.white,
-                      ),
+                      AppStrings.findYourDoctor,
+                      style: Theme.of(context).textTheme.displayMedium,
                     ),
                   ],
                 ),
                 CircleAvatar(
-                  radius: 30,
-                  foregroundImage:
-                      AssetImage(userData.image),
+                  radius: AppSize.s30,
+                  foregroundImage: AssetImage(
+                    userData.image,
+                  ),
                 ),
               ],
             ),
           ),
           Positioned(
-            left: 22,
-            right: 22,
-            bottom: -28,
+            left: AppPadding.p22,
+            right: AppPadding.p22,
+            bottom: -AppPadding.p28,
             child: Center(
               child: Container(
                 height: 55,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
+                  borderRadius: BorderRadius.circular(AppSize.s6),
                   color: ColorManager.white,
                 ),
                 child: ListTile(
                   trailing: const Icon(Icons.close),
-                  title: const Text('Search....'),
+                  title: const Text(AppStrings.search),
                   leading: const Icon(Icons.search_sharp),
                   minLeadingWidth: 0,
                   onTap: () {
@@ -175,58 +172,97 @@ class _HomeViewState extends State<HomeView> {
       ],
     );
   }
-//
-// Widget _getLiveDoctors() {
-//   // if (service != null) {
-//   //   return SizedBox(
-//   //     height: AppSize.s140,
-//   //     child: ListView(
-//   //       scrollDirection: Axis.horizontal,
-//   //       children: service
-//   //           .map((service) => SizedBox(
-//   //         height: AppSize.s140,
-//   //         child: Card(
-//   //           elevation: AppSize.s1_5,
-//   //           shape: RoundedRectangleBorder(
-//   //             borderRadius: BorderRadius.circular(AppSize.s12),
-//   //             side: BorderSide(
-//   //                 color: ColorManager.primary, width: AppSize.s1),
-//   //           ),
-//   //           child: Column(
-//   //             children: [
-//   //               ClipRRect(
-//   //                 borderRadius: BorderRadius.circular(
-//   //                   AppSize.s12,
-//   //                 ),
-//   //                 child: Image.network(
-//   //                   service.image,
-//   //                   fit: BoxFit.cover,
-//   //                   width: AppSize.s100,
-//   //                   height: AppSize.s100,
-//   //                 ),
-//   //               ),
-//   //               Padding(
-//   //                 padding: const EdgeInsets.all(8.0),
-//   //                 child: Text(
-//   //                   service.title,
-//   //                   style: Theme.of(context).textTheme.labelSmall,
-//   //                 ),
-//   //               ),
-//   //             ],
-//   //           ),
-//   //         ),
-//   //       ))
-//   //           .toList(),
-//   //     ),
-//   //   );
-//   // } else {
-//
-//     return ListView.builder(itemBuilder:(context, index) =>Stack(children: [
-//       Image.asset(ImageAssets.live)
-//
-//     ],) );
-//   // }
-// }
+
+  Widget _getLiveDoctors() {
+    // if (service != null) {
+    //   return SizedBox(
+    //     height: AppSize.s140,
+    //     child: ListView(
+    //       scrollDirection: Axis.horizontal,
+    //       children: service
+    //           .map((service) => SizedBox(
+    //         height: AppSize.s140,
+    //         child: Card(
+    //           elevation: AppSize.s1_5,
+    //           shape: RoundedRectangleBorder(
+    //             borderRadius: BorderRadius.circular(AppSize.s12),
+    //             side: BorderSide(
+    //                 color: ColorManager.primary, width: AppSize.s1),
+    //           ),
+    //           child: Column(
+    //             children: [
+    //               ClipRRect(
+    //                 borderRadius: BorderRadius.circular(
+    //                   AppSize.s12,
+    //                 ),
+    //                 child: Image.network(
+    //                   service.image,
+    //                   fit: BoxFit.cover,
+    //                   width: AppSize.s100,
+    //                   height: AppSize.s100,
+    //                 ),
+    //               ),
+    //               Padding(
+    //                 padding: const EdgeInsets.all(8.0),
+    //                 child: Text(
+    //                   service.title,
+    //                   style: Theme.of(context).textTheme.labelSmall,
+    //                 ),
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //       ))
+    //           .toList(),
+    //     ),
+    //   );
+    // } else {
+
+    return SizedBox(
+      height: 180,
+      child: ListView.builder(
+          itemCount: 20,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) => Container(
+            width: 115,
+            height: 170,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppSize.s6)
+            ),
+            child: Stack(
+                  children: [
+                    Positioned(
+                      top: AppSize.s10,
+                      right: AppSize.s10,
+                      child: Container(
+                        width: AppSize.s40,
+                        height: AppSize.s18,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(AppSize.s4),
+                          color: ColorManager.error,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            CircleAvatar(
+                             radius: AppSize.s5,
+                              foregroundColor: ColorManager.white,
+                            ),
+                            const Text("live"),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Image.asset(
+                      ImageAssets.live,
+                      fit: BoxFit.fill,
+                    ),
+                  ],
+                ),
+          )),
+    );
+    // }
+  }
 //
 // Widget _getStoresWidgets() {
 //   // if (stores != null) {

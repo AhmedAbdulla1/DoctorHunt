@@ -9,30 +9,36 @@ import 'package:doctor_hunt/presentation/common/state_render/state_renderer_imp.
 
 class HomeViewModel extends BaseViewModel
     with HomeViewModelInput, HomeViewModelOutput {
-  final _dataStreamController = StreamController<HomeViewObject>();
+  final StreamController<HomeViewObject> _dataStreamController =
+      StreamController.broadcast();
   final HomeUseCase _homeUseCase;
 
   HomeViewModel(this._homeUseCase);
 
   // --  inputs
   @override
-  void start() {
-    _getHomeData();
+  void start() async{
+    await _getHomeData();
   }
 
   _getHomeData() async {
     inputState.add(
-        LoadingState(stateRenderType: StateRenderType.fullScreenLoadingState));
+      LoadingState(
+        stateRenderType: StateRenderType.fullScreenLoadingState,
+      ),
+    );
     (await _homeUseCase.execute(Constant.token)).fold(
         (failure) => {
               // left -> failure
-              inputState.add(ErrorState(
-                stateRenderType: StateRenderType.fullScreenErrorState,
-                message: failure.message,
-              ))
+              inputState.add(
+                ErrorState(
+                  stateRenderType: StateRenderType.fullScreenErrorState,
+                  message: failure.message,
+                ),
+              ),
             }, (home) {
       // right -> data (success)
-
+      print(home);
       inputHomeData.add(HomeViewObject(
         home.userData!,
         home.liveDoctors!,

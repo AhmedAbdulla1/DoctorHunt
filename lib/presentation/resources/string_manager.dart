@@ -22,7 +22,8 @@ class AppStrings {
   static const String emailError2 = 'Please enter valid email ';
   static const String password = 'Password';
   static const String passwordError = 'Please enter your password';
-
+  static const String findYourDoctor='Find Your Doctor';
+  static const String search='Search....';
   static const String liveDoctors="Live Doctors";
   static const String popularDoctor="Popular Doctor";
   static const String featureDoctor="Feature Doctor";
@@ -63,7 +64,6 @@ class AppStrings {
   static const photoCamera = "photo_from_camera";
   static const home = 'Home';
   static const notification = 'Notification';
-  static const search = 'Search';
   static const setting = 'Setting';
   static const services = 'Services';
   static const stores = 'Stores';
