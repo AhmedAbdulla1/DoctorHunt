@@ -6,6 +6,7 @@ import 'package:doctor_hunt/domain/usecase/home_usecase.dart';
 import 'package:doctor_hunt/presentation/base/base_view_model.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_render.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_renderer_imp.dart';
+import 'package:flutter/cupertino.dart';
 
 class HomeViewModel extends BaseViewModel
     with HomeViewModelInput, HomeViewModelOutput {
@@ -17,8 +18,9 @@ class HomeViewModel extends BaseViewModel
 
   // --  inputs
   @override
-  void start() async{
-    await _getHomeData();
+  void start()  {
+    debugPrint('start2');
+     _getHomeData();
   }
 
   _getHomeData() async {
@@ -27,24 +29,28 @@ class HomeViewModel extends BaseViewModel
         stateRenderType: StateRenderType.fullScreenLoadingState,
       ),
     );
-    (await _homeUseCase.execute(Constant.token)).fold(
-        (failure) => {
-              // left -> failure
-              inputState.add(
-                ErrorState(
-                  stateRenderType: StateRenderType.fullScreenErrorState,
-                  message: failure.message,
-                ),
-              ),
-            }, (home) {
+    (await _homeUseCase.execute(null))
+        .fold(
+            (failure) {
+                  print('error');
+                  // left -> failure
+                  inputState.add(
+                    ErrorState(
+                      stateRenderType: StateRenderType.fullScreenErrorState,
+                      message: failure.message,
+                    ),
+                  );
+                }, (home) {
       // right -> data (success)
-      print(home);
+      debugPrint('home');
+      // debugPrint(home as String?);
       inputHomeData.add(HomeViewObject(
         home.userData!,
         home.liveDoctors!,
         home.popularDoctors!,
         home.featureDoctors!,
       ));
+
       // navigate to main screen
     });
     inputState.add(ContentState());

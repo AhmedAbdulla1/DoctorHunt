@@ -173,20 +173,23 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, Home>> home(String token) async{
+  Future<Either<Failure, Home>> home() async{
     if (await _networkInfo.isConnected) {
-      final HomeResponse response = await _remoteDataSource.homeResponse(token);
+      final DataResponse response = await _remoteDataSource.homeResponse();
       try {
-        if (response.status == ApiInternalStatus.success) {
+        print(response.userData);
+        if (response.userData != null) {
           // _localDataSource.saveHomeToCache(response);
+          print('right');
           return Right(
             response.toDomain(),
           );
         } else {
+          print('left');
           return Left(
             Failure(
               code: ApiInternalStatus.failure,
-              message: response.message ?? ResponseMessage.customDefault,
+              message:ResponseMessage.customDefault,
             ),
           );
         }

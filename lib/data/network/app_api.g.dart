@@ -104,13 +104,13 @@ class _AppServicesClient implements AppServicesClient {
   }
 
   @override
-  Future<HomeResponse> home(authorization) async {
+  Future<DataResponse> home() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{
       "authorization":Constant.token
     };
-    final _data = {'Authorization': authorization};
+    final _data = {};
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<HomeResponse>(Options(
       method: 'GET',
@@ -124,7 +124,9 @@ class _AppServicesClient implements AppServicesClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = HomeResponse.fromJson(_result.data!);
+    print(_result.data);
+    final value = DataResponse.fromJson(_result.data!);
+    print(value.userData);
     return value;
   }
 

@@ -108,7 +108,7 @@ class HomeResponse extends BaseResponse {
   HomeResponse(this.data);
 
   //from json
-  factory HomeResponse.fromJson(dynamic json) => _$HomeResponseFromJson(json);
+  factory HomeResponse.fromJson(Map<String, dynamic> json) => _$HomeResponseFromJson(json);
 
   // to json
   Map<String, dynamic> toJson() => _$HomeResponseToJson(this);
@@ -232,13 +232,13 @@ class FeatureDoctorsResponse {
 
 @JsonSerializable()
 class DataResponse {
-  @JsonKey(name: 'userData')
+  @JsonKey(name: 'user_data')
   UserDataResponse? userData;
-  @JsonKey(name: 'liveDoctors')
+  @JsonKey(name: 'lives_doctors')
   List<LiveDoctorResponse>? liveDoctors;
-  @JsonKey(name: 'popularDoctors')
+  @JsonKey(name: 'popular_doctors')
   List<PopularDoctorsResponse>? popularDoctors;
-  @JsonKey(name: 'featureDoctors')
+  @JsonKey(name: 'feature_doctors')
   List<FeatureDoctorsResponse>? featureDoctors;
   DataResponse(
     this.userData,

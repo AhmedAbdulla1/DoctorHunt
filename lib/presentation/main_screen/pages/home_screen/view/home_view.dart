@@ -25,6 +25,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   void initState() {
+    debugPrint('start');
     _bind();
     super.initState();
   }
@@ -40,7 +41,6 @@ class _HomeViewState extends State<HomeView> {
     return StreamBuilder<StateFlow>(
       stream: _homeViewModel.outputState,
       builder: (context, snapshot) {
-          print(snapshot.data);
           return snapshot.data?.getScreenWidget(
             context,
             _getContent(),
@@ -51,13 +51,13 @@ class _HomeViewState extends State<HomeView> {
           _getContent();}
     );
   }
-  UserData _userData=UserData(id: 10, email: 'email', username: 'username', phoneNumber: 'phoneNumber', image: ImageAssets.personal, location: 'location', dateBirth: 'dateBirth');
+  final UserData _userData=UserData(id: 10, email: 'email', username: 'username', phoneNumber: 'phoneNumber', image: ImageAssets.personal, location: 'location', dateBirth: 'dateBirth');
   Widget _getContent() {
     return SingleChildScrollView(
       child: StreamBuilder<HomeViewObject>(
           stream: _homeViewModel.outputHomeData,
           builder: (context, snapshot) {
-            // print(snapshot.data);
+
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

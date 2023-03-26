@@ -182,9 +182,9 @@ Map<String, dynamic> _$FeatureDoctorsResponseToJson(
     };
 
 DataResponse _$DataResponseFromJson(Map<String, dynamic> json) => DataResponse(
-      json['userData'] == null
+      json['user_data'] == null
           ? null
-          : UserDataResponse.fromJson(json['userData'] as Map<String, dynamic>),
+          : UserDataResponse.fromJson(json['user_data'] as Map<String, dynamic>),
       (json['liveDoctors'] as List<dynamic>?)
           ?.map((e) => LiveDoctorResponse.fromJson(e as Map<String, dynamic>))
           .toList(),

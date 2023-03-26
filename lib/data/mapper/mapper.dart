@@ -89,25 +89,22 @@ extension LiveDoctorResponsMapper on LiveDoctorResponse? {
   }
 }
 //
-extension HomeResponseMapper on HomeResponse? {
+extension HomeResponseMapper on DataResponse? {
   Home toDomain() {
-    UserData? userData =this?.data?.userData.toDomain() ;
+    UserData? userData =this?.userData.toDomain() ;
     List<LiveDoctors> liveDoctors = (this
-                ?.data
                 ?.liveDoctors
                 ?.map((liveDoctorsResponse) => liveDoctorsResponse.toDomain()) ??
             const Iterable.empty())
         .cast<LiveDoctors>()
         .toList();
     List<PopularDoctors> popularDoctors = (this
-                ?.data
                 ?.popularDoctors
-                ?.map((popularDcotorsResponse) => popularDcotorsResponse.toDomain()) ??
+                ?.map((popularDoctorsResponse) => popularDoctorsResponse.toDomain()) ??
             const Iterable.empty())
         .cast<PopularDoctors>()
         .toList();
     List<FeatureDoctors> featureDoctors = (this
-                ?.data
                 ?.featureDoctors
                 ?.map((featureDoctorsResponse) => featureDoctorsResponse.toDomain()) ??
             const Iterable.empty())
