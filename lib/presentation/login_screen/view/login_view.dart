@@ -46,7 +46,9 @@ class _LoginViewState extends State<LoginView> {
         .listen((isLoading) {
       if (isLoading) {
         SchedulerBinding.instance.addPostFrameCallback((_) {
-          //_appPreferences.setPressKeyLoginScreen();
+          _appPreferences.setPressKeyLoginScreen();
+          print(_loginViewModel.token);
+          _appPreferences.setToken(_loginViewModel.token);
           Navigator.pushReplacementNamed(context, Routes.mainScreen);
         });
       }

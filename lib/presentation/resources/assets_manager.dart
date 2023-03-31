@@ -13,6 +13,12 @@ class ImageAssets{
   static const  String google= '$imagePath/google.svg';
   static const  String personal= '$imagePath/person.jpg';
   static const  String grad= '$imagePath/grad.png';
+  static const  String toothDentist= '$imagePath/toothDentist.png';
+  static const  String heartDentist= '$imagePath/heartDentist.png';
+  static const  String eayDentist= '$imagePath/eayDentist.png';
+  static const  String slimmingDentist= '$imagePath/slimmingDentist.png';
+
+
   static const  String book= '$imagePath/book.svg';
   static const  String chat= '$imagePath/chat.svg';
   static const  String live= '$imagePath/live2.png';

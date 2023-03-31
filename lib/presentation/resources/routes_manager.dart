@@ -4,7 +4,10 @@ import 'package:doctor_hunt/presentation/forgot_password/forgot_password_view.da
 import 'package:doctor_hunt/presentation/login_screen/view/login_view.dart';
 import 'package:doctor_hunt/presentation/main_screen/main_view.dart';
 import 'package:doctor_hunt/presentation/on_boarding_screen/view/on_boarding_view.dart';
+import 'package:doctor_hunt/presentation/resources/assets_manager.dart';
 import 'package:doctor_hunt/presentation/resources/color_manager.dart';
+import 'package:doctor_hunt/presentation/resources/font_manager.dart';
+import 'package:doctor_hunt/presentation/resources/style_manager.dart';
 import 'package:doctor_hunt/presentation/resources/values_manager.dart';
 import 'package:doctor_hunt/presentation/signup_screen/doctor/view/signup_view.dart';
 import 'package:doctor_hunt/presentation/signup_screen/patient/view/signup_view.dart';
@@ -76,7 +79,7 @@ class RouteGenerator {
         return unDefinedRoute();
     }
   }
-
+  List<String> liveDoctor=[];
   static Route unDefinedRoute() {
     return MaterialPageRoute(
       builder: (_) => Scaffold(
@@ -85,17 +88,82 @@ class RouteGenerator {
             AppStrings.noRouteFound,
           ),
         ),
-        body:  Center(
-          child: TextFormField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius:BorderRadius.circular(20),
-                borderSide: BorderSide(
-                  color: ColorManager.grey,
-                  style: BorderStyle.solid,
-                  width: AppSize.s1_5,
-                )
-              )
+        body:  Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
+          child: ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
+
+          separatorBuilder: (context, index) => const SizedBox(
+              height: 140,
+            ),
+            itemCount: 5,
+            scrollDirection: Axis.vertical,
+            itemBuilder: (context, index) => Container(
+              width: 115,
+              height: 170,
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(AppSize.s6),
+                boxShadow: [BoxShadow(
+                  color: ColorManager.lightGrey.withOpacity(0.5), //color of shadow
+                  spreadRadius: 5, //spread radius
+                  blurRadius: 7, // blur radius
+                  offset: const Offset(1, 2),
+                ),],
+              ),
+              child: Stack(
+                children: [
+                  Image.network(
+                    ImageAssets.personal,
+                    width: 115,
+                    height: 190,
+                    fit: BoxFit.cover,
+                  ),
+                  Positioned(
+                    top: AppSize.s10,
+                    right: AppSize.s10,
+                    child: Container(
+                      width: AppSize.s40,
+                      height: AppSize.s18,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(AppSize.s4),
+                        color: ColorManager.error,
+
+                      ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: AppSize.s1_5),
+                              child: Container(
+                                height: 5,
+                                width: 5,
+                                decoration: BoxDecoration(
+                                  color: ColorManager.white,
+                                  borderRadius:
+                                  BorderRadius.circular(AppSize.s5),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: AppSize.s1_5,
+                            ),
+                            Text(
+                              "live",
+                              style: getMediumStyle(
+                                color: ColorManager.white,
+                                fontSize: FontSize.s7,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

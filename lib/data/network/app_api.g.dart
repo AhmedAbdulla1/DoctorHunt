@@ -107,12 +107,10 @@ class _AppServicesClient implements AppServicesClient {
   Future<DataResponse> home() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{
-      "authorization":Constant.token
-    };
-    final _data = {};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<HomeResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<DataResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -124,9 +122,7 @@ class _AppServicesClient implements AppServicesClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    print(_result.data);
     final value = DataResponse.fromJson(_result.data!);
-    print(value.userData);
     return value;
   }
 

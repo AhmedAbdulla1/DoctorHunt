@@ -142,6 +142,7 @@ class FeatureDoctors {
   int id ;
   String username;
   String image;
+  bool isLiked;
   bool isLive;
   int views;
   String avgRating;
@@ -152,6 +153,7 @@ class FeatureDoctors {
     required this.id,
     required this.username,
     required this.image,
+    required this.isLiked,
     required this.isLive,
     required this.views,
     required this.avgRating,

@@ -110,9 +110,9 @@ LiveDoctorResponse _$LiveDoctorResponseFromJson(Map<String, dynamic> json) =>
       json['id'] as int?,
       json['username'] as String?,
       json['image'] as String?,
-      json['is_live'] as bool?,
+      json['isLive'] as bool?,
       json['views'] as int?,
-      json['avg_rating'] as String?,
+      json['avgRating'] as String?,
       json['price'] as int?,
       json['specialist'] as String?,
     );
@@ -122,9 +122,9 @@ Map<String, dynamic> _$LiveDoctorResponseToJson(LiveDoctorResponse instance) =>
       'id': instance.id,
       'username': instance.username,
       'image': instance.image,
-      'is_live': instance.isLive,
+      'isLive': instance.isLive,
       'views': instance.views,
-      'avg_rating': instance.avgRating,
+      'avgRating': instance.avgRating,
       'price': instance.price,
       'specialist': instance.specialist,
     };
@@ -135,9 +135,9 @@ PopularDoctorsResponse _$PopularDoctorsResponseFromJson(
       json['id'] as int?,
       json['username'] as String?,
       json['image'] as String?,
-      json['is_live'] as bool?,
+      json['isLive'] as bool?,
       json['views'] as int?,
-      json['avg_rating'] as String?,
+      json['avgRating'] as String?,
       json['price'] as int?,
       json['specialist'] as String?,
     );
@@ -148,9 +148,9 @@ Map<String, dynamic> _$PopularDoctorsResponseToJson(
       'id': instance.id,
       'username': instance.username,
       'image': instance.image,
-      'is_live': instance.isLive,
+      'isLive': instance.isLive,
       'views': instance.views,
-      'avg_rating': instance.avgRating,
+      'avgRating': instance.avgRating,
       'price': instance.price,
       'specialist': instance.specialist,
     };
@@ -161,9 +161,10 @@ FeatureDoctorsResponse _$FeatureDoctorsResponseFromJson(
       json['id'] as int?,
       json['username'] as String?,
       json['image'] as String?,
-      json['is_live'] as bool?,
+      json['isLiked'] as bool?,
+      json['isLive'] as bool?,
       json['views'] as int?,
-      json['avg_rating'] as String?,
+      json['avgRating'] as String?,
       json['price'] as int?,
       json['specialist'] as String?,
     );
@@ -174,18 +175,19 @@ Map<String, dynamic> _$FeatureDoctorsResponseToJson(
       'id': instance.id,
       'username': instance.username,
       'image': instance.image,
-      'is_live': instance.isLive,
+      'isLive': instance.isLive,
+      'isLiked': instance.isLiked,
       'views': instance.views,
-      'avg_rating': instance.avgRating,
+      'avgRating': instance.avgRating,
       'price': instance.price,
       'specialist': instance.specialist,
     };
 
 DataResponse _$DataResponseFromJson(Map<String, dynamic> json) => DataResponse(
-      json['user_data'] == null
+      json['userData'] == null
           ? null
-          : UserDataResponse.fromJson(json['user_data'] as Map<String, dynamic>),
-      (json['liveDoctors'] as List<dynamic>?)
+          : UserDataResponse.fromJson(json['userData'] as Map<String, dynamic>),
+      (json['livesDoctors'] as List<dynamic>?)
           ?.map((e) => LiveDoctorResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
       (json['popularDoctors'] as List<dynamic>?)
@@ -194,14 +196,14 @@ DataResponse _$DataResponseFromJson(Map<String, dynamic> json) => DataResponse(
           .toList(),
       (json['featureDoctors'] as List<dynamic>?)
           ?.map(
-              (e) => FeatureDoctorsResponse.fromJson(e as Map<String, dynamic>))
+              (e) => FeatureDoctorsResponse.fromJson(e["doc"]as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$DataResponseToJson(DataResponse instance) =>
     <String, dynamic>{
       'userData': instance.userData,
-      'liveDoctors': instance.liveDoctors,
+      'livesDoctors': instance.liveDoctors,
       'popularDoctors': instance.popularDoctors,
       'featureDoctors': instance.featureDoctors,
     };

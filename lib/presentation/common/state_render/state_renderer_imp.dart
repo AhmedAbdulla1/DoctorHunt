@@ -98,7 +98,7 @@ extension StateFlowExtension on StateFlow {
             //return full screen loading state
             return StateRenderer(
               stateRenderType: StateRenderType.fullScreenLoadingState,
-              retryAction: () {},
+              retryAction: retryAction,
             );
           }
         }

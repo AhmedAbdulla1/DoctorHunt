@@ -7,6 +7,7 @@ import 'package:doctor_hunt/presentation/common/freezed/freezed.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_render.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_renderer_imp.dart';
 import 'package:doctor_hunt/presentation/resources/string_manager.dart';
+import 'package:flutter/rendering.dart';
 
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInput, LoginViewModelOutput {
@@ -22,7 +23,7 @@ class LoginViewModel extends BaseViewModel
       StreamController.broadcast();
   LoginObject _loginObject = LoginObject('', '');
   final LoginUseCase _loginUseCase;
-
+  String token ="";
   LoginViewModel(this._loginUseCase);
 
   @override
@@ -66,8 +67,8 @@ class LoginViewModel extends BaseViewModel
       inputState.add(
         ContentState(),
       );
-      print(data.token);
-      Constant.token="Token ${data.token}";
+      token="Token ${data.token}";
+      print(token);
       isUserLoginSuccessfullyStreamController.add(true);
     });
   }

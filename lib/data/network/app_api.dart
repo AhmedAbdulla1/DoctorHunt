@@ -1,6 +1,7 @@
 
 
 import 'package:dio/dio.dart';
+import 'package:doctor_hunt/app/app_prefs.dart';
 import 'package:doctor_hunt/app/constant.dart';
 import 'package:doctor_hunt/data/response/responses.dart';
 import 'package:retrofit/http.dart';

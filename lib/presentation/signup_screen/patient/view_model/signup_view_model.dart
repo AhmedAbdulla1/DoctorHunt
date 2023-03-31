@@ -21,6 +21,7 @@ class SignUpViewModel extends BaseViewModel
   final StreamController<void> _allInputsValid = StreamController.broadcast();
   SignupObject _signupObject = SignupObject("", "", "");
   final RegisterUseCase _registerUseCase;
+  String token = '';
 
   SignUpViewModel(this._registerUseCase);
 
@@ -51,6 +52,7 @@ class SignUpViewModel extends BaseViewModel
         ),
       );
     }, (data) {
+      token = "Token ${data.token}";
       inputState.add(
         ContentState(),
       );

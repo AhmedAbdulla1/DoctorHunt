@@ -177,10 +177,8 @@ class RepositoryImpl implements Repository {
     if (await _networkInfo.isConnected) {
       final DataResponse response = await _remoteDataSource.homeResponse();
       try {
-        print(response.userData);
         if (response.userData != null) {
           // _localDataSource.saveHomeToCache(response);
-          print('right');
           return Right(
             response.toDomain(),
           );

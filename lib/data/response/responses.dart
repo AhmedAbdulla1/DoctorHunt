@@ -122,11 +122,11 @@ class LiveDoctorResponse {
   String? username;
   @JsonKey(name: 'image')
   String? image;
-  @JsonKey(name: 'is_live')
+  @JsonKey(name: 'isLive')
   bool? isLive;
   @JsonKey(name: 'views')
   int? views;
-  @JsonKey(name: 'avg_rating')
+  @JsonKey(name: 'avgRating')
   String? avgRating;
   @JsonKey(name: 'price')
   int? price;
@@ -162,11 +162,11 @@ class PopularDoctorsResponse {
   String? username;
   @JsonKey(name: 'image')
   String? image;
-  @JsonKey(name: 'is_live')
+  @JsonKey(name: 'isLive')
   bool? isLive;
   @JsonKey(name: 'views')
   int? views;
-  @JsonKey(name: 'avg_rating')
+  @JsonKey(name: 'avgRating')
   String? avgRating;
   @JsonKey(name: 'price')
   int? price;
@@ -200,11 +200,13 @@ class FeatureDoctorsResponse {
   String? username;
   @JsonKey(name: 'image')
   String? image;
-  @JsonKey(name: 'is_live')
+  @JsonKey(name: 'isLive')
   bool? isLive;
+  @JsonKey(name: 'isLiked')
+  bool? isLiked;
   @JsonKey(name: 'views')
   int? views;
-  @JsonKey(name: 'avg_rating')
+  @JsonKey(name: 'avgRating')
   String? avgRating;
   @JsonKey(name: 'price')
   int? price;
@@ -216,6 +218,7 @@ class FeatureDoctorsResponse {
       this.id,
       this.username,
       this.image,
+      this.isLiked,
       this.isLive,
       this.views,
       this.avgRating,
@@ -232,13 +235,13 @@ class FeatureDoctorsResponse {
 
 @JsonSerializable()
 class DataResponse {
-  @JsonKey(name: 'user_data')
+  @JsonKey(name: 'userData')
   UserDataResponse? userData;
-  @JsonKey(name: 'lives_doctors')
+  @JsonKey(name: 'livesDoctors')
   List<LiveDoctorResponse>? liveDoctors;
-  @JsonKey(name: 'popular_doctors')
+  @JsonKey(name: 'popularDoctors')
   List<PopularDoctorsResponse>? popularDoctors;
-  @JsonKey(name: 'feature_doctors')
+  @JsonKey(name: 'featureDoctors')
   List<FeatureDoctorsResponse>? featureDoctors;
   DataResponse(
     this.userData,

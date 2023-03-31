@@ -1,10 +1,12 @@
+import 'dart:ffi';
+
 import 'package:doctor_hunt/presentation/resources/language_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String prefsKeyLang = "PrefsKeyLang";
 const String pressKeyOnBoardingScreen = 'PressKeyOnBoardingScreen';
 const String pressKeyLoginScreen = 'PressKeyLoginScreen';
-
+const String token="token";
 class AppPreferences {
   final SharedPreferences _sharedPreferences;
 
@@ -66,7 +68,13 @@ class AppPreferences {
   Future<bool> isPressKeySignupScreen() async {
     return _sharedPreferences.getBool(pressKeyLoginScreen) ?? false;
   }
-
+  //token
+  Future<void> setToken(String t)async{
+    _sharedPreferences.setString(token, t);
+  }
+  String getToken(){
+    return _sharedPreferences.getString(token)??'';
+  }
   // logout
   Future<void> logout() {
     return _sharedPreferences.remove(pressKeyLoginScreen);

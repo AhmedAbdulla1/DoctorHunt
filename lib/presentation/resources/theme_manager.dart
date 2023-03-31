@@ -95,8 +95,10 @@ ThemeData getApplicationTheme() {
       ),
       displayMedium: getBoldStyle(
         color: ColorManager.white,
-        fontSize: 25,
+        fontSize: FontSize.s25,
       ),
+      titleLarge:getMediumStyle(color: ColorManager.black) ,
+      bodyMedium: getLightStyle(color: ColorManager.grey,),
     ),
     //input decoration theme
     inputDecorationTheme: InputDecorationTheme(

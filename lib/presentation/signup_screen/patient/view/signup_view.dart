@@ -53,7 +53,8 @@ class _SignupViewState extends State<SignupView> {
         .listen((isLoading) {
       if (isLoading) {
         SchedulerBinding.instance.addPostFrameCallback((_) {
-         // _appPreferences.setPressKeyLoginScreen();
+          _appPreferences.setPressKeySignupScreen();
+          _appPreferences.setToken(_signUpViewModel.token);
           Navigator.pushReplacementNamed(context, Routes.mainScreen);
         });
       }

@@ -9,8 +9,8 @@ extension UserDataResponseMapper on UserDataResponse? {
       id: this?.id.orZero() ?? 0,
       email: this?.email.orEmpty() ?? Constant.empty,
       username: this?.username.orEmpty() ?? Constant.empty,
-      phoneNumber: this?.phoneNumber.orEmpty() ?? Constant.empty,
-      image: this?.image.orEmpty() ?? Constant.image,
+      phoneNumber: this?.phoneNumber?? Constant.empty,
+      image: this?.image ?? Constant.image,
       location: this?.location.orEmpty() ?? Constant.empty,
       dateBirth: this?.dateBirth.orEmpty() ?? Constant.empty,
     );
@@ -48,13 +48,13 @@ extension FeatureDoctorResponseMapper on FeatureDoctorsResponse? {
     return FeatureDoctors(
       id: this?.id.orZero()??Constant.zero,
       username: this?.username.orEmpty() ?? Constant.empty,
-      image: this?.image.orEmpty() ?? Constant.image,
+      image: this?.image ?? Constant.image,
       avgRating: this?.avgRating.orEmpty()??Constant.zero.toString(),
+      isLiked: this?.isLiked??false,
       isLive: this?.isLive??false,
       price: this?.price.orZero()??Constant.zero,
       views: this?.views.orZero()??Constant.zero,
       specialist: this?.specialist.orEmpty()??Constant.empty,
-
     );
   }
 }
@@ -64,7 +64,7 @@ extension PopularDoctorsResponseMapper on PopularDoctorsResponse? {
     return PopularDoctors(
       id: this?.id.orZero()??Constant.zero,
       username: this?.username.orEmpty() ?? Constant.empty,
-      image: this?.image.orEmpty() ?? Constant.image,
+      image: this?.image ?? Constant.image,
       avgRating: this?.avgRating.orEmpty()??Constant.zero.toString(),
       isLive: this?.isLive??false,
       price: this?.price.orZero()??Constant.zero,
@@ -79,7 +79,7 @@ extension LiveDoctorResponsMapper on LiveDoctorResponse? {
     return LiveDoctors(
       id: this?.id.orZero()??Constant.zero,
       username: this?.username.orEmpty() ?? Constant.empty,
-      image: this?.image.orEmpty() ?? Constant.image,
+      image: this?.image ?? Constant.image,
       avgRating: this?.avgRating.orEmpty()??Constant.zero.toString(),
       isLive: this?.isLive??false,
       price: this?.price.orZero()??Constant.zero,

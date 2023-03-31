@@ -1,17 +1,18 @@
 import 'dart:async';
+import 'dart:ffi';
 
-import 'package:doctor_hunt/app/constant.dart';
 import 'package:doctor_hunt/domain/models/models.dart';
 import 'package:doctor_hunt/domain/usecase/home_usecase.dart';
 import 'package:doctor_hunt/presentation/base/base_view_model.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_render.dart';
 import 'package:doctor_hunt/presentation/common/state_render/state_renderer_imp.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
+import 'package:rxdart/rxdart.dart';
 class HomeViewModel extends BaseViewModel
     with HomeViewModelInput, HomeViewModelOutput {
-  final StreamController<HomeViewObject> _dataStreamController =
-      StreamController.broadcast();
+  final  _dataStreamController =
+  BehaviorSubject<HomeViewObject>();
   final HomeUseCase _homeUseCase;
 
   HomeViewModel(this._homeUseCase);
@@ -19,20 +20,20 @@ class HomeViewModel extends BaseViewModel
   // --  inputs
   @override
   void start()  {
-    debugPrint('start2');
+    // debugPrint('start2');
      _getHomeData();
   }
 
   _getHomeData() async {
     inputState.add(
+
       LoadingState(
         stateRenderType: StateRenderType.fullScreenLoadingState,
       ),
     );
-    (await _homeUseCase.execute(null))
-        .fold(
+    debugPrint('loading');
+    (await _homeUseCase.execute(Void)).fold(
             (failure) {
-                  print('error');
                   // left -> failure
                   inputState.add(
                     ErrorState(
@@ -43,17 +44,17 @@ class HomeViewModel extends BaseViewModel
                 }, (home) {
       // right -> data (success)
       debugPrint('home');
-      // debugPrint(home as String?);
       inputHomeData.add(HomeViewObject(
         home.userData!,
         home.liveDoctors!,
         home.popularDoctors!,
         home.featureDoctors!,
       ));
-
+      inputState.add(ContentState());
       // navigate to main screen
     });
-    inputState.add(ContentState());
+    debugPrint('end');
+
   }
 
   @override

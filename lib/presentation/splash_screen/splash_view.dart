@@ -27,7 +27,7 @@ class _SplashViewState extends State<SplashView> {
       ),
       () async {
         if (await _appPreferences.isPressKeyLoginScreen()) {
-          Navigator.pushReplacementNamed(context, Routes.registerScreen);
+          Navigator.pushReplacementNamed(context, Routes.mainScreen);
         } else if (await _appPreferences.isPressKeyOnBoardingScreen()) {
           Navigator.pushReplacementNamed(context, Routes.registerScreen);
         } else {

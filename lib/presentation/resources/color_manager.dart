@@ -6,7 +6,8 @@ class ColorManager {
   static Color grey = const Color(0xff677294);
   static Color iconGrey= const Color(0xff858EA9);
   static Color lightGrey = const Color(0xff9E9E9E);
-
+  static Color starActive = const Color(0xffF6D060);
+  static Color starNoActive = const Color(0xffE2E5EA);
   // new colors
   static Color darkPrimary = const Color(0xffd17d11);
   static Color lightPrimary = const Color(0xCCd17d11); // color with 80% opacity
